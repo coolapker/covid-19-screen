@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mojospy.covid19screen.mapper.OverallMapper">
+
+
+    <update id="updateOverall" parameterType="mojospy.covid19screen.domain.Overall">
+        update t_overall
+        <set>
+            confirmed_count = #{confirmedCount},
+            cured_count = #{curedCount},
+            cured_rate = #{curedRate},
+            current_confirmed_count= #{currentConfirmedCount},
+            dead_count= #{deadCount},
+            dead_rate= #{deadRate},
+            imported_count= #{importedCount},
+            no_infect_count= #{noInfectCount},
+            update_time = #{updateTime},
+
+            <if test="confirmedIncr != null">
+                confirmed_incr = #{confirmedIncr},
+            </if>
+            <if test="curedIncr != null">
+                cured_incr = #{curedIncr},
+            </if>
+            <if test="currentConfirmedIncr != null">
+                current_confirmed_incr = #{currentConfirmedIncr},
+            </if>
+            <if test="deadIncr != null">
+                dead_incr = #{deadIncr},
+            </if>
+            <if test="importedIncr != null">
+                imported_incr = #{importedIncr},
+            </if>
+            <if test="noInfectIncr != null">
+                no_infect_incr = #{noInfectIncr},
+            </if>
+        </set>
+    </update>
+</mapper>
+

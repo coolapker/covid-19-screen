@@ -1,7 +1,7 @@
 <template>
   <div
     class="main-map-chart"
-    ref="dataMap"
+    ref="dataExistingMap"
     style="width: 100%; height: 100%"
    />
 </template>
@@ -23,7 +23,7 @@ export default {
       if (null != chart && undefined != chart) {
         chart.dispose()
       }
-      chart = this.$echarts.init(this.$refs.dataMap)
+      chart = this.$echarts.init(this.$refs.dataExistingMap)
       this.setOptions()
     },
     setOptions() {

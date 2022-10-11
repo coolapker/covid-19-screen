@@ -128,7 +128,7 @@
         <el-col :span="6">
           <!-- 右侧区域开始 -->
           <div class="main-right">
-            <!-- 治愈率和死亡率 -->
+             治愈率和死亡率
             <chart-card
               title="治愈率和死亡率"
               :innerClass="`cure-and-dead-rate-chart`"
@@ -141,6 +141,7 @@
                 style="width: 280px; height: 130px"
               />
             </chart-card>
+            // 新增趋势组件
             <chart-card title="新增趋势" :customClass="`chart-item-bottom-sep`">
               <basic-trend-chart
                 :data="basicIncrTrendData"
@@ -471,6 +472,7 @@ export default {
         self.setMapData(res.data)
       })
     },
+    // 趋势数据
     queryTrendDataList () {
       let self = this
       covid19Service.getDailyList().then((res) => {

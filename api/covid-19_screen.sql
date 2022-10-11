@@ -20,15 +20,15 @@ CREATE TABLE t_province
 # 城市
 create table t_city
 (
-    cid           varchar(255) not null comment '城市id',
-    city          varchar(50) comment '城市名称',
-    existing      INT(11) COMMENT '现有确诊',
-    confirmed     INT(11) COMMENT '累计确诊',
-    confirmedIncr int(11) comment '较昨日新增',
-    dead          INT(11) COMMENT '死亡',
-    cured         INT(11) COMMENT '治愈',
-    pid           varchar(255) comment '城市表外键',
-    update_time   datetime COMMent '更新时间',
+    cid            varchar(255) not null comment '城市id',
+    city           varchar(50) comment '城市名称',
+    existing       INT(11) COMMENT '现有确诊',
+    confirmed      INT(11) COMMENT '累计确诊',
+    confirmed_incr int(11) comment '较昨日新增',
+    dead           INT(11) COMMENT '死亡',
+    cured          INT(11) COMMENT '治愈',
+    pid            varchar(255) comment '城市表外键',
+    update_time    datetime COMMent '更新时间',
     primary key (cid),
     foreign key (pid) references t_province (pid)
 );

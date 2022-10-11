@@ -1,9 +1,9 @@
 package mojospy.covid19screen.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import generator.domain.City;
-import generator.service.CityService;
-import generator.mapper.CityMapper;
+import mojospy.covid19screen.domain.City;
+import mojospy.covid19screen.mapper.CityMapper;
+import mojospy.covid19screen.service.CityService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class CityServiceImpl extends ServiceImpl<CityMapper, City>
-    implements CityService{
+    implements CityService {
 
 }
 

@@ -1,7 +1,7 @@
 package mojospy.covid19screen.service;
 
-import generator.domain.City;
 import com.baomidou.mybatisplus.extension.service.IService;
+import mojospy.covid19screen.domain.City;
 
 /**
 * @author Administrator

@@ -1,7 +1,7 @@
 package mojospy.covid19screen.mapper;
 
-import generator.domain.City;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import mojospy.covid19screen.domain.City;
 
 /**
 * @author Administrator

@@ -58,7 +58,7 @@ public class ProvinceController {
     }
 
     @GetMapping("/specialRegion")
-    public R<List<Province>> getspecialRegion() {
+    public R<List<Province>> getSpecialRegion() {
         return R.ok(this.provinceService.getSpecialRegionList());
     }
     /**

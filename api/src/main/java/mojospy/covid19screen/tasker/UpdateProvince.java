@@ -1,5 +1,6 @@
 package mojospy.covid19screen.tasker;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -41,47 +42,59 @@ public class UpdateProvince {
     @PostConstruct
     public void add() {
         if (provinceService.list().size() != 0) return;
-        // 省份info
-        List<Map> info = Spider.getProvince();
-        for (Map province : info) {
+        // 省份
+        List<Map> provinceList = Spider.getProvince();
+        for (Map province : provinceList) {
             String pname = (String) province.get("name");
             String pid = (String) province.get("id");
             Province province1 = new Province();
             province1.setProvinceLabel(pname);
             province1.setPid(pid);
             provinceService.save(province1);
+
+            // 城市
+//            List children =(List) province.get("children");
+//            for (City city : children) {
+//                String cname = (String) city.get("name");
+//                String cid = (String) city.get("id");
+//                CnCityInfo cnCityInfo = new CnCityInfo();
+//                cnCityInfo.setCity(cname);
+//                cnCityInfo.setPid(pid);
+//                cnCityInfo.setCid(cid);
+//                cnCityInfoService.save(cnCityInfo);
+//            }
         }
     }
 
-    @PostConstruct
-    public void update() {
-        List<Map> info = Spider.getProvince();
-        for (Map province : info) {
-            Map<String, Object> ptotal = (Map) province.get("total");
-            Map<String, Integer> ptoday = (Map) province.get("today");
-            Integer todayConfirmCount = ptoday.get("confirm");
-            String pid = (String) province.get("id");
-            Integer pconfirm = (Integer) ptotal.get("confirm");
-            Integer pheal = (Integer) ptotal.get("heal");
-            Integer pdead = (Integer) ptotal.get("dead");
-            Integer pexisting = pconfirm - pheal - pdead;
-            String deadRate  = String.format("%.2f", ((double)pdead/pconfirm)*100);
-            String curedRate = String.format("%.2f", ((double)pheal/pconfirm)*100);
+        @PostConstruct
+        public void update () {
+            List<Map> info = Spider.getProvince();
+            for (Map province : info) {
+                Map<String, Object> ptotal = (Map) province.get("total");
+                Map<String, Integer> ptoday = (Map) province.get("today");
+                Integer todayConfirmCount = ptoday.get("confirm");
+                String pid = (String) province.get("id");
+                Integer pconfirm = (Integer) ptotal.get("confirm");
+                Integer pheal = (Integer) ptotal.get("heal");
+                Integer pdead = (Integer) ptotal.get("dead");
+                Integer pexisting = pconfirm - pheal - pdead;
+                String deadRate = String.format("%.2f", ((double) pdead / pconfirm) * 100);
+                String curedRate = String.format("%.2f", ((double) pheal / pconfirm) * 100);
 
-            Province province1 = new Province();
-            province1.setTodayConfirmedCount(todayConfirmCount);
-            province1.setDeadCount(pdead);
-            province1.setCuredCount(pheal);
-            province1.setConfirmedCount(pconfirm);
-            province1.setCurrentConfirmedCount(pexisting);
-            province1.setDeadRate(deadRate);
-            province1.setCuredRate(curedRate);
-            province1.setUpdateTime(LocalDateTime.now());
+                Province province1 = new Province();
+                province1.setTodayConfirmedCount(todayConfirmCount);
+                province1.setDeadCount(pdead);
+                province1.setCuredCount(pheal);
+                province1.setConfirmedCount(pconfirm);
+                province1.setCurrentConfirmedCount(pexisting);
+                province1.setDeadRate(deadRate);
+                province1.setCuredRate(curedRate);
+                province1.setUpdateTime(LocalDateTime.now());
 
-            LambdaUpdateWrapper<Province> pwrapper = new LambdaUpdateWrapper<>();
-            pwrapper.eq(Province::getPid, pid);
-            provinceService.update(province1, pwrapper);
+                LambdaUpdateWrapper<Province> pwrapper = new LambdaUpdateWrapper<>();
+                pwrapper.eq(Province::getPid, pid);
+                provinceService.update(province1, pwrapper);
+            }
         }
     }
-}
 

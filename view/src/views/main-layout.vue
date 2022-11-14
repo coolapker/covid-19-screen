@@ -22,47 +22,54 @@
               <!--左列-->
               <el-row>
                 <el-col :span="7">
-<!--                  现有确诊Top10-->
-                  <chart-card
-                    title="现有确诊（TOP 10）"
-                    :customClass="`chart-item-bottom-sep`"
-                  >
-                    <province-ranking-bar-chart
-                      ref="topConfirmedCountRankChart"
-                      :data="top10ProvinceData"
-                      style="width: 100%; height: 380px"
+                  <!--                  新增确诊Top10-->
+                  <chart-card>
+                    <div slot="title" class="province-table-title flex">
+                      各市新增确诊
+                      <el-link
+                          icon="el-icon-view"
+                          style="color: #bcbcbf; padding-left: 10px"
+                          :underline="false"
+                          @click="provinceTableDialogShowHandler"
+                      >详情
+                      </el-link>
+                    </div>
+                    <province-ranking-chart
+                        ref="topConfirmedCountRankChart"
+                        :data="top10CityData"
+                        style="width: 100%; height: 380px"
                     />
                   </chart-card>
-<!--                  港澳台现有确诊-->
+                  <!--                  港澳台新增确诊-->
                   <chart-card
-                      title="港澳台现有确诊"
+                      title="港澳台新增确诊"
                       :customClass="`chart-item-bottom-sep`"
                   >
-                    <special-region-ranking-bar-chart
+                    <special-region-ranking-chart
                         ref="specialRegionConfirmedCountRankChart"
                         :data="specialRegionData"
                         style="width: 100%; height: 120px"
                     />
                   </chart-card>
-
-<!--                   占比-->
-<!--                  <chart-card-->
-<!--                    title="占比"-->
-<!--                    :customClass="`chart-item-bottom-sep`"-->
-<!--                  >-->
-<!--                    <basic-proportion-chart-->
-<!--                      ref="basicProportionChart"-->
-<!--                      :data="basicData"-->
-<!--                      style="width: 100%; height: 120px"-->
+                  <!--                  新增趋势组件-->
+<!--                  <chart-card title="新增趋势" :customClass="`chart-item-bottom-sep`">-->
+<!--                    <basic-trend-chart-->
+<!--                        :data="basicIncrTrendData"-->
+<!--                        ref="confirmedCountTrendChart"-->
+<!--                        style="width: 100%; height: 320px"-->
 <!--                    />-->
 <!--                  </chart-card>-->
-                  <chart-card title="最近一周累计治愈">
-                    <current-confirmed-compare-bar-chart
-                      ref="confirmSingleBarChart"
-                      :data="confirmSingleBarChartData"
-                      style="width: 100%; height: 310px"
-                    />
-                  </chart-card>
+                  <!--                   占比-->
+                  <!--                  <chart-card-->
+                  <!--                    title="占比"-->
+                  <!--                    :customClass="`chart-item-bottom-sep`"-->
+                  <!--                  >-->
+                  <!--                    <basic-proportion-chart-->
+                  <!--                      ref="basicProportionChart"-->
+                  <!--                      :data="basicData"-->
+                  <!--                      style="width: 100%; height: 120px"-->
+                  <!--                    />-->
+                  <!--                  </chart-card>-->
                 </el-col>
                 <el-col :span="17">
                   <!-- 顶部基本统计信息开始 -->
@@ -70,38 +77,38 @@
                     <!-- 顶部统计信息开始 -->
                     <div class="top-basic-info">
                       <basic-data-item-label
-                        label="现有确诊"
-                        :config="defaultDataConfig.currentConfirmedCount"
-                        :inCrValue="basicData.currentConfirmedIncr"
+                          label="现有确诊"
+                          :config="defaultDataConfig.currentConfirmedCount"
+                          :inCrValue="basicData.currentConfirmedIncr"
                       />
                       <basic-data-item-label
-                        label="累计确诊"
-                        :config="defaultDataConfig.confirmedCount"
-                        :inCrValue="basicData.confirmedIncr"
+                          label="累计确诊"
+                          :config="defaultDataConfig.confirmedCount"
+                          :inCrValue="basicData.confirmedIncr"
                       />
                       <!-- 境外输入 -->
                       <basic-data-item-label
-                        label="境外输入"
-                        :config="defaultDataConfig.importedCount"
-                        :inCrValue="basicData.importedIncr"
+                          label="境外输入"
+                          :config="defaultDataConfig.importedCount"
+                          :inCrValue="basicData.importedIncr"
                       />
                       <!-- 无症状感染者 -->
                       <basic-data-item-label
-                        label="无症状感染者"
-                        :config="defaultDataConfig.noInfectCount"
-                        :inCrValue="basicData.noInfectIncr"
+                          label="无症状感染者"
+                          :config="defaultDataConfig.noInfectCount"
+                          :inCrValue="basicData.noInfectIncr"
                       />
                       <!-- 累计治愈 -->
                       <basic-data-item-label
-                        label="累计治愈"
-                        :config="defaultDataConfig.curedCount"
-                        :inCrValue="basicData.curedIncr"
+                          label="累计治愈"
+                          :config="defaultDataConfig.curedCount"
+                          :inCrValue="basicData.curedIncr"
                       />
                       <!-- 死亡人数 -->
                       <basic-data-item-label
-                        label="累计死亡"
-                        :config="defaultDataConfig.deadCount"
-                        :inCrValue="basicData.deadIncr"
+                          label="累计死亡"
+                          :config="defaultDataConfig.deadCount"
+                          :inCrValue="basicData.deadIncr"
                       />
                     </div>
                     <!-- 顶部统计信息结束 -->
@@ -111,10 +118,10 @@
                     <!-- 地图 -->
                     <div class="map">
                       <data-map
-                        ref="dataMap"
-                        title=""
-                        :list="mapDataList"
-                        style="width: 100%; height: 100%"
+                          ref="dataMap"
+                          title=""
+                          :list="mapDataList"
+                          style="width: 100%; height: 100%"
                       />
                     </div>
                   </div>
@@ -128,42 +135,41 @@
         <el-col :span="6">
           <!-- 右侧区域开始 -->
           <div class="main-right">
-             治愈率和死亡率
             <chart-card
-              title="治愈率和死亡率"
-              :innerClass="`cure-and-dead-rate-chart`"
-              :customClass="`chart-item-bottom-sep`"
+                title="治愈率和死亡率"
+                :innerClass="`cure-and-dead-rate-chart`"
+                :customClass="`chart-item-bottom-sep`"
             >
               <cured-and-dead-rate-chart
-                ref="cureRateChart"
-                :data="rate"
-                title="治愈率"
-                style="width: 280px; height: 130px"
+                  ref="cureRateChart"
+                  :data="rate"
+                  title="治愈率"
+                  style="width: 280px; height: 130px"
               />
             </chart-card>
-            // 新增趋势组件
-            <chart-card title="新增趋势" :customClass="`chart-item-bottom-sep`">
-              <basic-trend-chart
-                :data="basicIncrTrendData"
-                ref="confirmedCountTrendChart"
-                style="width: 100%; height: 320px"
-              />
-            </chart-card>
-            <chart-card title="">
+<!--            <chart-card title="最近一周累计治愈">-->
+<!--              <current-confirmed-compare-bar-chart-->
+<!--                  ref="confirmSingleBarChart"-->
+<!--                  :data="confirmSingleBarChartData"-->
+<!--                  style="width: 100%; height: 310px"-->
+<!--              />-->
+<!--            </chart-card>-->
+
+            <chart-card>
               <div slot="title" class="province-table-title flex">
                 各省累计确诊
                 <el-link
-                  icon="el-icon-view"
-                  style="color: #bcbcbf; padding-left: 10px"
-                  :underline="false"
-                  @click="provinceTableDialogShowHandler"
-                  >详情</el-link
-                >
+                    icon="el-icon-view"
+                    style="color: #bcbcbf; padding-left: 10px"
+                    :underline="false"
+                    @click="provinceTableDialogShowHandler"
+                >详情
+                </el-link>
               </div>
-               <dv-scroll-board
+              <dv-scroll-board
                   :config="provinceConfirmedCountBoardConfig"
                   style="width: 100%; height: 360px"
-                />
+              />
             </chart-card>
           </div>
           <!-- 右侧区域结束 -->
@@ -173,34 +179,34 @@
     <!-- 其他页面 -->
     <div class="province-data-table-wrapper">
       <el-dialog
-        :visible.sync="provinceTableDialogVisible"
-        width="50%"
-        :before-close="provinceTableDialogClose"
+          :visible.sync="provinceTableDialogVisible"
+          width="50%"
+          :before-close="provinceTableDialogClose"
       >
         <div slot="title" class="province-data-modal-title">
           <p>各省数据表</p>
           <span class="province-data-modal-update-time"
-            >（更新时间：{{ basicData.updateTime }}）</span
+          >（更新时间：{{ basicData.updateTime }}）</span
           >
         </div>
         <div class="area-data-table-wrapper">
           <el-table
-            class="area-data-table"
-            :data="provinceDataList"
-            style="width: 100%"
+              class="area-data-table"
+              :data="provinceDataList"
+              style="width: 100%"
           >
             <el-table-column prop="provinceLabel" align="center" label="省份">
             </el-table-column>
             <el-table-column
-              prop="confirmedCount"
-              align="center"
-              label="累计确诊"
+                prop="confirmedCount"
+                align="center"
+                label="累计确诊"
             >
             </el-table-column>
             <el-table-column
-              prop="currentConfirmedCount"
-              align="center"
-              label="现有确诊"
+                prop="currentConfirmedCount"
+                align="center"
+                label="现有确诊"
             >
             </el-table-column>
             <el-table-column prop="curedCount" align="center" label="累计治愈">
@@ -212,37 +218,37 @@
       </el-dialog>
       <!-- 关于弹窗 -->
       <el-dialog
-        title="关于"
-        :visible.sync="aboutDialogVisible"
-        width="30%"
-        :before-close="aboutDialogClose"
+          title="关于"
+          :visible.sync="aboutDialogVisible"
+          width="30%"
+          :before-close="aboutDialogClose"
       >
-        <about />
+        <about/>
       </el-dialog>
       <!-- 关于图标 -->
       <div class="about-wraper">
         <i
-          class="el-icon-info"
-          style="font-size: 30px"
-          @click="aboutDialogShowHandler"
+            class="el-icon-info"
+            style="font-size: 30px"
+            @click="aboutDialogShowHandler"
         ></i>
       </div>
     </div>
   </div>
 </template>
 <script>
+// 引入组件
 import ChartCard from '../components/ChartCard'
 import DataMap from '../components/DataMap'
 import CuredAndDeadRateChart from '../components/CuredAndDeadRateChart'
 import BasicDataItemLabel from '../components/BasicDataItemLabel'
 import BasicTrendChart from '../components/BasicTrendChart'
-import ProvinceRankingBarChart from '../components/ProvinceRankingBarChart'
-import SpecialRegionRankingBarChart from '../components/SpecialRegionRankingBarChart'
+import SpecialRegionRankingChart from '../components/RankingChart/SpecialRegionRankingChart'
 import CurrentConfirmedCompareBarChart from '../components/CurrentConfirmedCompareBarChart'
 import About from '../components/About'
-import BasicProportionChart from '../components/BasicProportionChart'
 
 import covid19Service from '../api/covid19'
+import ProvinceRankingChart from "@/components/RankingChart/ProvinceRankingChart";
 
 const formatter = (number) => {
   const numbers = number.toString().split('').reverse()
@@ -323,18 +329,18 @@ const initProvinceConfirmedCountBoardConfig = (resultList = []) => {
 }
 export default {
   components: {
+    ProvinceRankingChart,
     ChartCard,
     DataMap,
     CuredAndDeadRateChart,
     BasicDataItemLabel,
     BasicTrendChart,
-    ProvinceRankingBarChart,
-    SpecialRegionRankingBarChart,
+    SpecialRegionRankingChart,
     CurrentConfirmedCompareBarChart,
     About,
     // BasicProportionChart
   },
-  data () {
+  data() {
     return {
       title: '全国新冠肺炎疫情数据大屏',
       provinceTableDialogVisible: false,
@@ -370,7 +376,7 @@ export default {
         data: [],
         waitTime: 2000,
         unit: '单位',
-        valueFormatter ({ value }) {
+        valueFormatter({value}) {
           const reverseNumber = (value + '').split('').reverse()
           let valueStr = ''
 
@@ -387,25 +393,32 @@ export default {
       provinceDataList: [],
       trendDataList: [],
       confirmedCountList: [],
-      top10ProvinceData: {
-        provinceList: [],
+      // 市 现存数据
+      top10CityData: {
+        cityList: [],
         valueList: []
       },
+      // top10ProvinceData: {
+      //   provinceList: [],
+      //   valueList: []
+      // },
       // 港澳台数据
       specialRegionData: {
         regionList: [],
         valueList: []
       },
-      basicIncrTrendData: {
-        dateList: [],
-        importedIncrDataList: [],
-        currentConfirmedIncrDataList: []
-      },
-      confirmSingleBarChartData: {
-        dateList: [],
-        currentConfirmedCountList: [],
-        confirmedCountList: []
-      },
+      // 趋势
+      // basicIncrTrendData: {
+      //   dateList: [],
+      //   importedIncrDataList: [],
+      //   currentConfirmedIncrDataList: []
+      // },
+      // 最近一周累计治愈
+      // confirmSingleBarChartData: {
+      //   dateList: [],
+      //   currentConfirmedCountList: [],
+      //   confirmedCountList: []
+      // },
       rate: {
         curedRate: 0,
         deadRate: 0
@@ -433,7 +446,7 @@ export default {
 
       return (year + '-' + month + '-' + day + ' ' + hours + ':' + min);
     },
-    queryBasicData () {
+    queryBasicData() {
       let self = this
       covid19Service.getOverall().then((res) => {
         if (!res.success) {
@@ -445,7 +458,7 @@ export default {
         self.setBasicData(res.data)
       })
     },
-    queryProvinceDataList () {
+    queryProvinceDataList() {
       let self = this
       covid19Service.getSpecialRegion().then(res => {
         if (!res.success) {
@@ -453,10 +466,17 @@ export default {
           console.log('错误:' + res.info)
           return
         }
-        // self.specialRegionData = res.data
+        self.specialRegionData = res.data
         self.setSpecialRegionRankingData(res.data)
       })
-      covid19Service.getProvinceDataList().then((res) => {
+      // 市数据
+      covid19Service.getCityDataList().then((res) => {
+        self.top10CityData = res.data
+        self.setTop10CityData(res.data)
+      })
+
+
+      covid19Service.getProvinceList().then((res) => {
         if (!res.success) {
           // TODO 错误处理...
           console.log('错误:' + res.info)
@@ -473,7 +493,7 @@ export default {
       })
     },
     // 趋势数据
-    queryTrendDataList () {
+    queryTrendDataList() {
       let self = this
       covid19Service.getDailyList().then((res) => {
         if (!res.success) {
@@ -486,18 +506,17 @@ export default {
         self.setBasicIncrTrendData(res.data)
       })
     },
-    setProvinceRankingData (areaList) {
+    setProvinceRankingData(areaList) {
       let provinceList = []
       let dataValueList = []
       for (let i = 0; i < 10; i++) {
         provinceList.push(areaList[i].provinceLabel)
         dataValueList.push(areaList[i].currentConfirmedCount)
       }
-      let data = {
+      this.top10ProvinceData = {
         provinceList: provinceList,
         valueList: dataValueList
       }
-      this.top10ProvinceData = data
     },
     // 设置港澳台数据
     setSpecialRegionRankingData(specialRegionList) {
@@ -505,15 +524,27 @@ export default {
       let dataValueList = []
       for (let i = 0; i < 3; i++) {
         specialRegion.push(specialRegionList[i].provinceLabel)
-        dataValueList.push(specialRegionList[i].currentConfirmedCount)
+        dataValueList.push(specialRegionList[i].todayConfirmedCount)
       }
-      let data = {
+      this.specialRegionData = {
         regionList: specialRegion,
         valueList: dataValueList
       }
-      this.specialRegionData = data
     },
-    setBasicIncrTrendData (data) {
+    // 设置市新增数据
+    setTop10CityData(cityData) {
+      let top10City = []
+      let top10Value = []
+      for (let i = 0; i < 10; i++) {
+        top10City.push(cityData[i].cityName)
+        top10Value.push(cityData[i].confirmedIncr)
+      }
+      this.top10CityData = {
+        cityList: top10City,
+        valueList: top10Value
+      }
+    },
+    setBasicIncrTrendData(data) {
       let dateList = []
       let currentConfirmedIncrList = []
       let importedIncrList = []
@@ -563,14 +594,14 @@ export default {
         confirmedCountList: confirmedCountList
       }
     },
-    setProvinceConfirmedCountBoardData (areaList) {
+    setProvinceConfirmedCountBoardData(areaList) {
       let resultList = areaList.map(item => {
         return [item.provinceLabel, item.confirmedCount, item.curedCount, item.deadCount]
       })
       // 重新生成，否则无法刷新状态
       this.provinceConfirmedCountBoardConfig = initProvinceConfirmedCountBoardConfig(resultList)
     },
-    setAreaChartData (areaList) {
+    setAreaChartData(areaList) {
       let confirmedCountList = []
       let provinceList = []
       let curedCountList = []
@@ -588,7 +619,7 @@ export default {
         deadCountList: deadCountList
       }
     },
-    setMapData (dataList) {
+    setMapData(dataList) {
       let list = dataList.map(item => {
         return {
           name: item.provinceLabel,
@@ -597,19 +628,19 @@ export default {
       })
       this.mapDataList = list
     },
-    provinceTableDialogShowHandler () {
+    provinceTableDialogShowHandler() {
       this.provinceTableDialogVisible = true
     },
-    provinceTableDialogClose () {
+    provinceTableDialogClose() {
       this.provinceTableDialogVisible = false
     },
-    aboutDialogShowHandler () {
+    aboutDialogShowHandler() {
       this.aboutDialogVisible = true
     },
-    aboutDialogClose () {
+    aboutDialogClose() {
       this.aboutDialogVisible = false
     },
-    setBasicData (data) {
+    setBasicData(data) {
       // 重新生成，否则视图不更新
       let config = initBasicConfig(data)
       this.defaultDataConfig = config
@@ -619,7 +650,7 @@ export default {
         deadRate: data.deadRate / 100
       }
     },
-    startQueryData () {
+    startQueryData() {
       this.queryBasicData()
       this.queryProvinceDataList()
       this.queryTrendDataList()
@@ -627,15 +658,15 @@ export default {
     initAllChart() {
       this.$refs.dataMap.initChart()
       this.$refs.cureRateChart.initChart()
-      this.$refs.confirmedCountTrendChart.initChart()
+      // this.$refs.confirmedCountTrendChart.initChart()
       this.$refs.topConfirmedCountRankChart.initChart()
       // 初始化港澳台
       this.$refs.specialRegionConfirmedCountRankChart.initChart()
-      this.$refs.confirmSingleBarChart.initChart()
+      // this.$refs.confirmSingleBarChart.initChart()
       // this.$refs.basicProportionChart.initChart()
     }
   },
-  mounted () {
+  mounted() {
     this.initAllChart()
     this.startQueryData()
 
@@ -654,18 +685,22 @@ export default {
 .container {
   position: relative;
 }
+
 h1 {
   font-size: 35px;
   font-weight: bold;
   padding: 20px;
 }
+
 .flex {
   display: flex;
 }
+
 .top-header {
   position: relative;
   margin-bottom: 10px;
 }
+
 .top-header-tip {
   font-size: 14px;
   position: absolute;
@@ -674,30 +709,37 @@ h1 {
   top: 0;
   right: 0;
 }
+
 .title {
   min-width: 350px;
 }
+
 .chart-card {
   background: #0f142b;
   border-radius: 10px;
   margin: 0 20px;
 }
+
 .main-inner-map-wraper {
   height: 100%;
   margin: 0 20px;
 }
+
 .map {
   width: 99%;
   height: 840px;
   padding: 20px 10px 10px 10px;
 }
+
 .province-scroll-board-wrapper {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
 .chart-item-bottom-sep {
   margin-bottom: 20px;
 }
+
 .province-table-title {
   color: #fff;
   font-size: 16px;
@@ -705,23 +747,28 @@ h1 {
   padding: 10px 10px 10px 20px;
   text-align: left;
 }
+
 .basic-incr-trend-chart-wrapper {
   padding-bottom: 10px;
 }
+
 .sub-title,
 .last-update-time,
 .province-scroll-board-wrapper ::v-deep .dv-scroll-board .header,
 .province-scroll-board-wrapper ::v-deep .dv-scroll-board .rows {
   font-size: 14px;
 }
+
 .province-scroll-board-wrapper ::v-deep .dv-scroll-board .rows {
   color: #bcbcbf;
 }
+
 .province-data-modal-title {
   color: #000;
   font-size: 20px;
   font-weight: bold;
 }
+
 .province-data-modal-update-time {
   color: #58585a;
   font-size: 16px;
@@ -729,19 +776,24 @@ h1 {
   padding-top: 10px;
   display: block;
 }
+
 .cure-and-dead-rate-chart {
   display: flex;
   justify-content: space-around;
 }
+
 .top-basic-info {
   display: flex;
 }
+
 .dv-scroll-ranking-board .ranking-column .inside-column {
   background: linear-gradient(90deg, #29bfff, #a231ff, #0deccd, #29bfff);
 }
+
 .chart-item-container {
   margin: 0 10px;
 }
+
 .about-wraper {
   position: fixed;
   bottom: 20px;

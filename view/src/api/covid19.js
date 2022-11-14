@@ -4,18 +4,27 @@ import axios from 'axios'
  * 接口封装
  */
 export default {
+  // 总体
   getOverall() {
     let url = `/api/overall`
     return request.get(url)
   },
-  getProvinceDataList() {
-    let url = `/api/province/confirmed/current`
+  // 省
+  getProvinceList() {
+    let url = `/api/province/totalDesc`
     return request.get(url)
   },
+  // 港澳台 新增
   getSpecialRegion() {
     let url = '/api/province/specialRegion'
     return request.get(url)
   },
+  // 市 新增
+  getCityDataList() {
+    let url = '/api/city/incr'
+    return request.get(url)
+  },
+  // 省 日增
   getDailyList() {
     let url = `/api/province/list`
     return request.get(url)

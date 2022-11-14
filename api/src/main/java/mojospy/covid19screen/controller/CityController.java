@@ -1,8 +1,10 @@
 package mojospy.covid19screen.controller;
 
 
+import mojospy.covid19screen.domain.City;
 import mojospy.covid19screen.domain.Province;
 import mojospy.covid19screen.domain.dto.R;
+import mojospy.covid19screen.service.CityService;
 import mojospy.covid19screen.service.ProvinceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,52 +19,38 @@ import java.util.List;
  * @since 2022-09-28 15:28:13
  */
 @RestController
-@RequestMapping("/province")
-public class ProvinceController {
+@RequestMapping("/city")
+public class CityController {
     /**
      * 服务对象
      */
     @Resource
-    ProvinceService provinceService;
+    CityService cityService;
 
 
     /**
      * 通过主键查询单条数据
      */
     @GetMapping("{id}")
-    public ResponseEntity<Province> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.provinceService.getById(id));
+    public R<City> queryById(@PathVariable("id") Integer id) {
+        return R.ok(cityService.getById(id));
     }
 
     /**
-     * 获取累计确诊（排序）数据
+     * 城市新增排序
      */
-    @GetMapping("/totalDesc")
-    public R<List<Province>> getTotal() {
-        return R.ok(this.provinceService.getTotal());
+    @GetMapping("/incr")
+    public R<List<City>> getIncr() {
+        return R.ok(this.cityService.getIncr());
     }
 
-    /**
-     * 获取现存确诊（排序）数据
-     */
-//    @GetMapping("/confirmed/current")
-//    public R<List<Province>> getCurrent() {
-//        return R.ok(this.provinceService.currentList());
-//    }
 
-    /*
-    * 港澳台新增
-    * */
-    @GetMapping("/specialRegion")
-    public R<List<Province>> getSpecialRegion() {
-        return R.ok(this.provinceService.getSpecialRegionList());
-    }
     /**
      * 新增数据
      */
     @PostMapping
-    public ResponseEntity<Boolean> add(Province province) {
-        return ResponseEntity.ok(this.provinceService.save(province));
+    public ResponseEntity<Boolean> add(City city) {
+        return ResponseEntity.ok(this.cityService.save(city));
     }
 
      /*
@@ -84,7 +72,7 @@ public class ProvinceController {
      */
     @DeleteMapping
     public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.provinceService.removeById(id));
+        return ResponseEntity.ok(this.cityService.removeById(id));
     }
 
 

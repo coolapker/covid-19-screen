@@ -3,6 +3,8 @@ package mojospy.covid19screen.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import mojospy.covid19screen.domain.City;
 
+import java.util.List;
+
 /**
 * @author Administrator
 * @description 针对表【t_city】的数据库操作Service
@@ -10,4 +12,8 @@ import mojospy.covid19screen.domain.City;
 */
 public interface CityService extends IService<City> {
 
+    /**
+     * 城市现有确诊排序
+     */
+    List<City> getIncr();
 }

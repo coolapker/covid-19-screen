@@ -26,8 +26,6 @@ public class Spider {
 
     /**
      * 获取省数据
-     *
-     * @return List<Map>
      */
     public static List<Map> getProvince() {
         Map data = getData();
@@ -43,8 +41,6 @@ public class Spider {
 
     /**
      * 获取overall数据
-     *
-     * @return Overall
      */
     public static Map getOverall() {
         Map data = getData();

@@ -22,7 +22,7 @@ public class City implements Serializable {
     /**
      * 城市名称
      */
-    private String city;
+    private String cityName;
 
     /**
      * 现有确诊

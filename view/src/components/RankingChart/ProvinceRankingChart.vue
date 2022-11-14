@@ -14,7 +14,7 @@ export default {
       type: Object,
       default () {
         return {
-          provinceList: [],
+          cityList: [],
           valueList: []
         }
       }
@@ -74,7 +74,7 @@ export default {
           axisLine: {
             show: false
           },
-          data: this.data.provinceList
+          data: this.data.cityList
         }, {
           type: 'category',
           inverse: true,

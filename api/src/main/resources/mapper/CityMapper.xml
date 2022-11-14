@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mojospy.covid19screen.mapper.CityMapper">
+
+    <select id="getIncr" resultType="mojospy.covid19screen.domain.City">
+        select *
+        from t_city
+        where city_name not in ('未明确地区', '待确认')
+        order by confirmed_incr desc
+    </select>
+</mapper>
+

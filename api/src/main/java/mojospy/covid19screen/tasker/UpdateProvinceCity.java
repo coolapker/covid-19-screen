@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class UpdateProvince {
+public class UpdateProvinceCity {
     @Resource
     ProvinceService provinceService;
     @Resource
@@ -41,7 +41,7 @@ public class UpdateProvince {
                 String cname = (String) city.get("name");
                 String cid = (String) city.get("id");
                 City city1 = new City();
-                city1.setCity(cname);
+                city1.setCityName(cname);
                 city1.setPid(pid);
                 city1.setCid(cid);
                 cityService.save(city1);

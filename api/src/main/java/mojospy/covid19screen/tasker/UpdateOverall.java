@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import mojospy.covid19screen.domain.Overall;
 import mojospy.covid19screen.mapper.OverallMapper;
 import mojospy.covid19screen.service.OverallService;
+import mojospy.covid19screen.service.ProvinceService;
 import mojospy.covid19screen.util.Spider;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,8 @@ import java.util.Map;
 public class UpdateOverall {
     @Resource
     OverallService overallService;
+    @Resource
+    ProvinceService provinceService;
 
     @PostConstruct
     public void update() {
@@ -26,8 +29,9 @@ public class UpdateOverall {
         Integer confirmedCount = total.get("confirm");
         Integer curedCount = total.get("heal");
         Integer deadCount = total.get("dead");
-        String curedRate = String.format("%.2f", (double) curedCount / confirmedCount);
-        String deadRate = String.format("%.2f", (double) deadCount / confirmedCount);
+        // 治愈率死亡率
+        String curedRate = String.format("%.2f", provinceService.getCuredRate()*100);
+        String deadRate = String.format("%.2f", provinceService.getDeadRate()*100);
         Integer importedCount = total.get("input");
         Integer currentConfirmedCount = confirmedCount - deadCount - curedCount;
         Map<String, Integer> extData = (Map) chinaTotal.get("extData");
@@ -60,7 +64,6 @@ public class UpdateOverall {
         overall.setImportedIncr(importedIncr);
         overall.setCurrentConfirmedIncr(currentConfirmedIncr);
         overall.setNoInfectIncr(noInfectIncr);
-
 
         overallService.insertOrUpdate(overall);
     }

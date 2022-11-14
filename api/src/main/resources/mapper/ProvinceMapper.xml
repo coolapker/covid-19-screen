@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mojospy.covid19screen.mapper.ProvinceMapper">
+
+    <select id="getDeadRate" resultType="java.lang.Double">
+        select sum(dead_count) / sum(confirmed_count)
+        from t_province
+        where province_label not in ('香港', '台湾', '澳门')
+    </select>
+    <select id="getCuredRate" resultType="java.lang.Double">
+        select sum(cured_count) / sum(confirmed_count)
+        from t_province
+        where province_label not in ('香港', '台湾', '澳门')
+    </select>
+</mapper>
+

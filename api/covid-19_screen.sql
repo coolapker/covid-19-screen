@@ -1,6 +1,8 @@
 drop table if exists `t_city`;
 drop table if exists `t_province`;
 drop table if exists `t_overall`;
+drop table if exists `t_daily`;
+
 # 省
 CREATE TABLE t_province
 (
@@ -17,11 +19,11 @@ CREATE TABLE t_province
     PRIMARY KEY (pid)
 );
 
-# 城市
+# 市
 create table t_city
 (
     cid            varchar(255) not null comment '城市id',
-    city           varchar(50) comment '城市名称',
+    city_name      varchar(50) comment '城市名称',
     existing       INT(11) COMMENT '现有确诊',
     confirmed      INT(11) COMMENT '累计确诊',
     confirmed_incr int(11) comment '较昨日新增',
@@ -53,33 +55,13 @@ create table t_overall
     update_time             datetime comment '更新时间'
 );
 
-# create table t_daily(
-#                         "importedIncrList": [
-#                             ["07-15", 23],
-#     ],
-#                         "curedCountList": [
-#                             ["07-15", 110772],
+# create table t_daily
+# (
+#     day date comment '日期',
+#     confirm_incr int(11) comment '确诊新增'
+# input_incr int(11) comment '境外输入新增'，
 #
-#     ],
-#                         "confirmedCountList": [
-#                             ["07-15", 119503],
 #
-#     ],
-#                         "currentConfirmedIncrList": [
-#                             ["07-15", -108],
-#
-#     ],
-#                         "importedCountList": [
-#                             ["07-15", 6888],
-#
-#     ],
-#                         "noInFectCountList": [
-#                             ["07-15", 451],
-#     ["07-14", 464],
-#
-#     ],
-#                         "currentConfirmedCountList": [
-#                             ["07-15", 3124],
 # )
 
 

@@ -8,13 +8,13 @@ import javax.annotation.Resource;
 @Component
 public class Tasker {
     @Resource
-    UpdateProvince UpdateProvince;
+    UpdateProvinceCity UpdateProvinceCity;
     @Resource
     UpdateOverall updateOverall;
 
     @Scheduled(cron = "0 0 12 * * ?")
     public void update() {
-        UpdateProvince.update();
+        UpdateProvinceCity.update();
         updateOverall.update();
 
     }

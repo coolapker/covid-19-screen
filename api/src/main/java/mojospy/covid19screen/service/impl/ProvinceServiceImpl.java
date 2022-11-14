@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import mojospy.covid19screen.domain.Province;
 import mojospy.covid19screen.mapper.ProvinceMapper;
-import mojospy.covid19screen.mapper.ScreenMapper;
 import mojospy.covid19screen.service.ProvinceService;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +33,21 @@ public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> i
         return provinceMapper.selectList(wrapper);
     }
 
+    /**
+     * 获取死率
+     */
     @Override
-    public List<Province> totalList() {
+    public double getDeadRate() {
+        return provinceMapper.getDeadRate();
+    }
+
+    @Override
+    public double getCuredRate() {
+        return provinceMapper.getCuredRate();
+    }
+
+    @Override
+    public List<Province> getTotal() {
         LambdaQueryWrapper<Province> wrapper = new LambdaQueryWrapper<>();
         wrapper.orderByDesc(Province::getConfirmedCount);
         return provinceMapper.selectList(wrapper);

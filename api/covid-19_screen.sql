@@ -17,7 +17,7 @@ CREATE TABLE t_province
     cured_rate              varchar(11) comment '治愈率',
     update_time             datetime COMMent '更新时间',
     PRIMARY KEY (pid)
-);
+)comment '省份疫情信息';
 
 # 市
 create table t_city
@@ -32,7 +32,7 @@ create table t_city
     pid            varchar(255) comment '城市表外键',
     update_time    datetime COMMent '更新时间',
     primary key (cid)
-);
+)comment '市疫情信息';
 
 # 总体
 create table t_overall
@@ -52,16 +52,17 @@ create table t_overall
     no_infect_count         int(11) comment '无症状感染者',
     no_infect_incr          int(11) comment '无症状感染者新增',
     update_time             datetime comment '更新时间'
-);
+)comment '国内疫情信息';
+# 日增
+create table t_daily
+(
+    date_of      date comment '记录日期',
+    confirm_count int(11) comment '累计确诊',
+    confirm_incr int(11) comment '较昨日新增确诊',
+    input_incr int (11) comment '境外输入新增',
+    cure_incr  int (11) comment '较昨日治愈新增'
 
-# create table t_daily
-# (
-#     day date comment '日期',
-#     confirm_incr int(11) comment '确诊新增'
-# input_incr int(11) comment '境外输入新增'，
-#
-#
-# )
+)comment ''
 
 
 

@@ -9,9 +9,14 @@ export default {
     let url = `/api/overall`
     return request.get(url)
   },
-  // 省
+  // 省 累计确诊
   getProvinceList() {
     let url = `/api/province/totalDesc`
+    return request.get(url)
+  },
+  // 省 现存
+  getProvinceExisting() {
+    let url = `/api/province/existing`
     return request.get(url)
   },
   // 港澳台 新增

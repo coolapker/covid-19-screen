@@ -30,7 +30,7 @@
                           icon="el-icon-view"
                           style="color: #bcbcbf; padding-left: 10px"
                           :underline="false"
-                          @click="provinceTableDialogShowHandler"
+                          @click="cityTableDialogShowHandler"
                       >详情
                       </el-link>
                     </div>
@@ -52,13 +52,13 @@
                     />
                   </chart-card>
                   <!--                  新增趋势组件-->
-<!--                  <chart-card title="新增趋势" :customClass="`chart-item-bottom-sep`">-->
-<!--                    <basic-trend-chart-->
-<!--                        :data="basicIncrTrendData"-->
-<!--                        ref="confirmedCountTrendChart"-->
-<!--                        style="width: 100%; height: 320px"-->
-<!--                    />-->
-<!--                  </chart-card>-->
+                  <!--                  <chart-card title="新增趋势" :customClass="`chart-item-bottom-sep`">-->
+                  <!--                    <basic-trend-chart-->
+                  <!--                        :data="basicIncrTrendData"-->
+                  <!--                        ref="confirmedCountTrendChart"-->
+                  <!--                        style="width: 100%; height: 320px"-->
+                  <!--                    />-->
+                  <!--                  </chart-card>-->
                   <!--                   占比-->
                   <!--                  <chart-card-->
                   <!--                    title="占比"-->
@@ -117,6 +117,15 @@
                   <div class="main-inner-map-wraper">
                     <!-- 地图 -->
                     <div class="map">
+                      <el-button type="info"
+                                 style="background-color: #0f142b"
+                                 @click='changeData("count")'>累计
+                      </el-button>
+                      <el-button type="info"
+                                 style="background-color: #0f142b"
+                                 @click='changeData("existing")'>现存
+
+                      </el-button>
                       <data-map
                           ref="dataMap"
                           title=""
@@ -147,13 +156,13 @@
                   style="width: 280px; height: 130px"
               />
             </chart-card>
-<!--            <chart-card title="最近一周累计治愈">-->
-<!--              <current-confirmed-compare-bar-chart-->
-<!--                  ref="confirmSingleBarChart"-->
-<!--                  :data="confirmSingleBarChartData"-->
-<!--                  style="width: 100%; height: 310px"-->
-<!--              />-->
-<!--            </chart-card>-->
+            <!--            <chart-card title="最近一周累计治愈">-->
+            <!--              <current-confirmed-compare-bar-chart-->
+            <!--                  ref="confirmSingleBarChart"-->
+            <!--                  :data="confirmSingleBarChartData"-->
+            <!--                  style="width: 100%; height: 310px"-->
+            <!--              />-->
+            <!--            </chart-card>-->
 
             <chart-card>
               <div slot="title" class="province-table-title flex">
@@ -178,6 +187,7 @@
     </div>
     <!-- 其他页面 -->
     <div class="province-data-table-wrapper">
+      <!--      省份信息对话框-->
       <el-dialog
           :visible.sync="provinceTableDialogVisible"
           width="50%"
@@ -209,9 +219,60 @@
                 label="现有确诊"
             >
             </el-table-column>
+            <el-table-column
+                prop="todayConfirmedCount"
+                align="center"
+                label="较昨日新增"
+            >
+            </el-table-column>
             <el-table-column prop="curedCount" align="center" label="累计治愈">
             </el-table-column>
             <el-table-column prop="deadCount" align="center" label="累计死亡">
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-dialog>
+      // 城市弹窗
+      <el-dialog
+          :visible.sync="cityTableDialogVisible"
+          width="50%"
+          :before-close="cityTableDialogClose"
+      >
+        <div slot="title" class="province-data-modal-title">
+          <p>各市数据表</p>
+          <span class="province-data-modal-update-time"
+          >（更新时间：{{ basicData.updateTime }}）</span
+          >
+        </div>
+        <div class="area-data-table-wrapper">
+          <el-table
+              class="area-data-table"
+              :data="cityDataList"
+              style="width: 100%"
+          >
+            <el-table-column prop="cityName" align="center" label="城市">
+            </el-table-column>
+            <el-table-column
+                prop="confirmedIncr"
+                align="center"
+                label="较昨日新增"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="confirmed"
+                align="center"
+                label="累计确诊"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="existing"
+                align="center"
+                label="现有确诊"
+            >
+            </el-table-column>
+            <el-table-column prop="cured" align="center" label="累计治愈">
+            </el-table-column>
+            <el-table-column prop="dead" align="center" label="累计死亡">
             </el-table-column>
           </el-table>
         </div>
@@ -344,6 +405,7 @@ export default {
     return {
       title: '全国新冠肺炎疫情数据大屏',
       provinceTableDialogVisible: false,
+      cityTableDialogVisible: false,
       aboutDialogVisible: false,
       commonData: {},
       basicData: {
@@ -391,6 +453,7 @@ export default {
       },
       provinceConfirmedCountBoardConfig: initProvinceConfirmedCountBoardConfig(),
       provinceDataList: [],
+      cityDataList: [],
       trendDataList: [],
       confirmedCountList: [],
       // 市 现存数据
@@ -473,6 +536,7 @@ export default {
       covid19Service.getCityDataList().then((res) => {
         self.top10CityData = res.data
         self.setTop10CityData(res.data)
+        self.cityDataList = res.data
       })
 
 
@@ -488,197 +552,225 @@ export default {
         self.setProvinceRankingData(res.data)
         // 设置各省累计确诊轮播表格数据
         self.setProvinceConfirmedCountBoardData(res.data)
-        // 设置地图数据
-        self.setMapData(res.data)
       })
     },
-    // 趋势数据
-    queryTrendDataList() {
-      let self = this
-      covid19Service.getDailyList().then((res) => {
-        if (!res.success) {
-          // TODO 错误处理...
-          console.log('错误:' + res.info)
-          return
-        }
-        self.trendDataList = res.data
-        // 重置图表数据
-        self.setBasicIncrTrendData(res.data)
-      })
-    },
-    setProvinceRankingData(areaList) {
-      let provinceList = []
-      let dataValueList = []
-      for (let i = 0; i < 10; i++) {
-        provinceList.push(areaList[i].provinceLabel)
-        dataValueList.push(areaList[i].currentConfirmedCount)
-      }
-      this.top10ProvinceData = {
-        provinceList: provinceList,
-        valueList: dataValueList
+    // 地图更改数据
+    changeData(type) {
+      if (type === 'existing') {
+        covid19Service.getProvinceExisting().then(res => {
+          this.setMapData(res.data, 'existing')
+        })}
+        if (type === 'count') {
+          covid19Service.getProvinceList().then(res => {
+            this.setMapData(res.data, 'count')
+          })
       }
     },
-    // 设置港澳台数据
-    setSpecialRegionRankingData(specialRegionList) {
-      let specialRegion = []
-      let dataValueList = []
-      for (let i = 0; i < 3; i++) {
-        specialRegion.push(specialRegionList[i].provinceLabel)
-        dataValueList.push(specialRegionList[i].todayConfirmedCount)
+  // 趋势数据
+  queryTrendDataList() {
+    let self = this
+    covid19Service.getDailyList().then((res) => {
+      if (!res.success) {
+        // TODO 错误处理...
+        console.log('错误:' + res.info)
+        return
       }
-      this.specialRegionData = {
-        regionList: specialRegion,
-        valueList: dataValueList
-      }
-    },
-    // 设置市新增数据
-    setTop10CityData(cityData) {
-      let top10City = []
-      let top10Value = []
-      for (let i = 0; i < 10; i++) {
-        top10City.push(cityData[i].cityName)
-        top10Value.push(cityData[i].confirmedIncr)
-      }
-      this.top10CityData = {
-        cityList: top10City,
-        valueList: top10Value
-      }
-    },
-    setBasicIncrTrendData(data) {
-      let dateList = []
-      let currentConfirmedIncrList = []
-      let importedIncrList = []
-
-      let sevenDayDateList = []
-      // 仅显示一周条数据
-      let confirmedCountList = []
-      let curedCountList = []
-      // 仅获取7条数据
-      let count = 7
-      let noInfectDataList = []
-
-      for (let i = data.currentConfirmedIncrList.length - 1; i >= 0; i--) {
-        dateList.push(data.currentConfirmedIncrList[i][0])
-        currentConfirmedIncrList.push(data.currentConfirmedIncrList[i][1])
-      }
-      for (let i = data.importedIncrList.length - 1; i >= 0; i--) {
-        importedIncrList.push(data.importedIncrList[i][1])
-      }
-      for (let i = data.noInfectCountList.length - 1; i >= 0; i--) {
-        noInfectDataList.push(data.noInfectCountList[i][1])
-      }
-
-      for (let i = count; i >= 0; i--) {
-        if (confirmedCountList.length >= count) {
-          break
-        }
-        sevenDayDateList.push(data.confirmedCountList[i][0])
-        confirmedCountList.push(data.confirmedCountList[i][1])
-      }
-      for (let i = count; i >= 0; i--) {
-        if (curedCountList.length >= count) {
-          break
-        }
-        curedCountList.push(data.curedCountList[i][1])
-      }
-
-      this.basicIncrTrendData = {
-        dateList: dateList,
-        importedIncrDataList: importedIncrList,
-        currentConfirmedIncrDataList: currentConfirmedIncrList,
-        noInfectDataList: noInfectDataList
-      }
-      this.confirmSingleBarChartData = {
-        dateList: sevenDayDateList,
-        curedCountList: curedCountList,
-        confirmedCountList: confirmedCountList
-      }
-    },
-    setProvinceConfirmedCountBoardData(areaList) {
-      let resultList = areaList.map(item => {
-        return [item.provinceLabel, item.confirmedCount, item.curedCount, item.deadCount]
-      })
-      // 重新生成，否则无法刷新状态
-      this.provinceConfirmedCountBoardConfig = initProvinceConfirmedCountBoardConfig(resultList)
-    },
-    setAreaChartData(areaList) {
-      let confirmedCountList = []
-      let provinceList = []
-      let curedCountList = []
-      let deadCountList = []
-      areaList.forEach(item => {
-        provinceList.push(item.provinceLabel)
-        confirmedCountList.push(item.confirmedCount)
-        curedCountList.push(item.curedCount)
-        deadCountList.push(item.deadCount)
-      })
-      this.areaData = {
-        provinceList: provinceList,
-        confirmedCountList: confirmedCountList,
-        curedCountList: curedCountList,
-        deadCountList: deadCountList
-      }
-    },
-    setMapData(dataList) {
-      let list = dataList.map(item => {
-        return {
-          name: item.provinceLabel,
-          value: item.confirmedCount
-        }
-      })
-      this.mapDataList = list
-    },
-    provinceTableDialogShowHandler() {
-      this.provinceTableDialogVisible = true
-    },
-    provinceTableDialogClose() {
-      this.provinceTableDialogVisible = false
-    },
-    aboutDialogShowHandler() {
-      this.aboutDialogVisible = true
-    },
-    aboutDialogClose() {
-      this.aboutDialogVisible = false
-    },
-    setBasicData(data) {
-      // 重新生成，否则视图不更新
-      let config = initBasicConfig(data)
-      this.defaultDataConfig = config
-      // 处理治愈率和死亡率
-      this.rate = {
-        curedRate: data.curedRate / 100,
-        deadRate: data.deadRate / 100
-      }
-    },
-    startQueryData() {
-      this.queryBasicData()
-      this.queryProvinceDataList()
-      this.queryTrendDataList()
-    },
-    initAllChart() {
-      this.$refs.dataMap.initChart()
-      this.$refs.cureRateChart.initChart()
-      // this.$refs.confirmedCountTrendChart.initChart()
-      this.$refs.topConfirmedCountRankChart.initChart()
-      // 初始化港澳台
-      this.$refs.specialRegionConfirmedCountRankChart.initChart()
-      // this.$refs.confirmSingleBarChart.initChart()
-      // this.$refs.basicProportionChart.initChart()
+      self.trendDataList = res.data
+      // 重置图表数据
+      self.setBasicIncrTrendData(res.data)
+    })
+  },
+  setProvinceRankingData(areaList) {
+    let provinceList = []
+    let dataValueList = []
+    for (let i = 0; i < 10; i++) {
+      provinceList.push(areaList[i].provinceLabel)
+      dataValueList.push(areaList[i].currentConfirmedCount)
+    }
+    this.top10ProvinceData = {
+      provinceList: provinceList,
+      valueList: dataValueList
     }
   },
-  mounted() {
-    this.initAllChart()
-    this.startQueryData()
-
-    let self = this
-    // 定义定时器，隔 5 秒刷新一次
-    this.timer = setInterval(() => {
-      self.startQueryData()
-    }, 10000)
+  // 设置港澳台数据
+  setSpecialRegionRankingData(specialRegionList) {
+    let specialRegion = []
+    let dataValueList = []
+    for (let i = 0; i < 3; i++) {
+      specialRegion.push(specialRegionList[i].provinceLabel)
+      dataValueList.push(specialRegionList[i].todayConfirmedCount)
+    }
+    this.specialRegionData = {
+      regionList: specialRegion,
+      valueList: dataValueList
+    }
   },
-  beforeDestroy() {
-    clearInterval(this.timer)
+  // 设置市新增数据
+  setTop10CityData(cityData) {
+    let top10City = []
+    let top10Value = []
+    for (let i = 0; i < 10; i++) {
+      top10City.push(cityData[i].cityName)
+      top10Value.push(cityData[i].confirmedIncr)
+    }
+    this.top10CityData = {
+      cityList: top10City,
+      valueList: top10Value
+    }
+  },
+  setBasicIncrTrendData(data) {
+    let dateList = []
+    let currentConfirmedIncrList = []
+    let importedIncrList = []
+
+    let sevenDayDateList = []
+    // 仅显示一周条数据
+    let confirmedCountList = []
+    let curedCountList = []
+    // 仅获取7条数据
+    let count = 7
+    let noInfectDataList = []
+
+    for (let i = data.currentConfirmedIncrList.length - 1; i >= 0; i--) {
+      dateList.push(data.currentConfirmedIncrList[i][0])
+      currentConfirmedIncrList.push(data.currentConfirmedIncrList[i][1])
+    }
+    for (let i = data.importedIncrList.length - 1; i >= 0; i--) {
+      importedIncrList.push(data.importedIncrList[i][1])
+    }
+    for (let i = data.noInfectCountList.length - 1; i >= 0; i--) {
+      noInfectDataList.push(data.noInfectCountList[i][1])
+    }
+
+    for (let i = count; i >= 0; i--) {
+      if (confirmedCountList.length >= count) {
+        break
+      }
+      sevenDayDateList.push(data.confirmedCountList[i][0])
+      confirmedCountList.push(data.confirmedCountList[i][1])
+    }
+    for (let i = count; i >= 0; i--) {
+      if (curedCountList.length >= count) {
+        break
+      }
+      curedCountList.push(data.curedCountList[i][1])
+    }
+
+    this.basicIncrTrendData = {
+      dateList: dateList,
+      importedIncrDataList: importedIncrList,
+      currentConfirmedIncrDataList: currentConfirmedIncrList,
+      noInfectDataList: noInfectDataList
+    }
+    this.confirmSingleBarChartData = {
+      dateList: sevenDayDateList,
+      curedCountList: curedCountList,
+      confirmedCountList: confirmedCountList
+    }
+  },
+  setProvinceConfirmedCountBoardData(areaList) {
+    let resultList = areaList.map(item => {
+      return [item.provinceLabel, item.confirmedCount, item.curedCount, item.deadCount]
+    })
+    // 重新生成，否则无法刷新状态
+    this.provinceConfirmedCountBoardConfig = initProvinceConfirmedCountBoardConfig(resultList)
+  },
+  setAreaChartData(areaList) {
+    let confirmedCountList = []
+    let provinceList = []
+    let curedCountList = []
+    let deadCountList = []
+    areaList.forEach(item => {
+      provinceList.push(item.provinceLabel)
+      confirmedCountList.push(item.confirmedCount)
+      curedCountList.push(item.curedCount)
+      deadCountList.push(item.deadCount)
+    })
+    this.areaData = {
+      provinceList: provinceList,
+      confirmedCountList: confirmedCountList,
+      curedCountList: curedCountList,
+      deadCountList: deadCountList
+    }
+  },
+  setMapData(dataList, type) {
+    let list = dataList.map(item => {
+      if (type === 'count'){return {
+        name: item.provinceLabel,
+        value: item.confirmedCount
+      }}
+      if (type === 'existing'){return {
+        name: item.provinceLabel,
+        value: item.currentConfirmedCount
+      }}
+    })
+    this.mapDataList = list
+  },
+  provinceTableDialogShowHandler() {
+    this.provinceTableDialogVisible = true
+  },
+  cityTableDialogShowHandler() {
+    this.cityTableDialogVisible = true
+  },
+  provinceTableDialogClose() {
+    this.provinceTableDialogVisible = false
+  },
+  cityTableDialogClose() {
+    this.cityTableDialogVisible = false
+  },
+  aboutDialogShowHandler() {
+    this.aboutDialogVisible = true
+  },
+  aboutDialogClose() {
+    this.aboutDialogVisible = false
+  },
+  setBasicData(data) {
+    // 重新生成，否则视图不更新
+    let config = initBasicConfig(data)
+    this.defaultDataConfig = config
+    // 处理治愈率和死亡率
+    this.rate = {
+      curedRate: data.curedRate / 100,
+      deadRate: data.deadRate / 100
+    }
+  },
+  startQueryData() {
+    this.queryBasicData()
+    this.queryProvinceDataList()
+    this.queryTrendDataList()
+  },
+  initAllChart() {
+    this.$refs.dataMap.initChart()
+    this.$refs.cureRateChart.initChart()
+    // this.$refs.confirmedCountTrendChart.initChart()
+    this.$refs.topConfirmedCountRankChart.initChart()
+    // 初始化港澳台
+    this.$refs.specialRegionConfirmedCountRankChart.initChart()
+    // this.$refs.confirmSingleBarChart.initChart()
+    // this.$refs.basicProportionChart.initChart()
   }
+}
+,
+mounted()
+{
+  this.initAllChart()
+  this.startQueryData()
+  // 默认地图显示现存
+  covid19Service.getProvinceExisting().then(res => {
+    this.setMapData(res.data, 'existing')
+  })
+
+  let self = this
+  // 定义定时器，隔 5 秒刷新一次
+  this.timer = setInterval(() => {
+    self.startQueryData()
+  }, 10000)
+}
+,
+beforeDestroy()
+{
+  clearInterval(this.timer)
+}
 }
 </script>
 <style>

@@ -20,16 +20,27 @@ public interface ProvinceService extends IService<Province> {
     List<Province> getSpecialRegionList();
 
     /**
-     * 获取累计确诊（排序）数据
+     * 获取累计确诊
      */
     List<Province> getTotal();
 
-    //    获取大陆省份死亡率
+    /**
+     * 获取现存确诊
+     */
+    List<Province> currentList();
+
+
+    /**
+     * 获取大陆死亡率
+     */
     double getDeadRate();
 
+    /**
+     * 获取大陆治愈率
+     */
     double getCuredRate();
 
 
-    List<Province> currentList();
+
 
 }

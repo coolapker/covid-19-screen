@@ -1,8 +1,7 @@
 package mojospy.covid19screen.tasker;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import mojospy.covid19screen.domain.Overall;
-import mojospy.covid19screen.mapper.OverallMapper;
+import mojospy.covid19screen.domain.Province;
 import mojospy.covid19screen.service.OverallService;
 import mojospy.covid19screen.service.ProvinceService;
 import mojospy.covid19screen.util.Spider;
@@ -12,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -30,8 +30,8 @@ public class UpdateOverall {
         Integer curedCount = total.get("heal");
         Integer deadCount = total.get("dead");
         // 治愈率死亡率
-        String curedRate = String.format("%.2f", provinceService.getCuredRate()*100);
-        String deadRate = String.format("%.2f", provinceService.getDeadRate()*100);
+        String curedRate = String.format("%.2f", provinceService.getCuredRate() * 100);
+        String deadRate = String.format("%.2f", provinceService.getDeadRate() * 100);
         Integer importedCount = total.get("input");
         Integer currentConfirmedCount = confirmedCount - deadCount - curedCount;
         Map<String, Integer> extData = (Map) chinaTotal.get("extData");

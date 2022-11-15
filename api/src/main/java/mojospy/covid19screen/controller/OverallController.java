@@ -15,6 +15,9 @@ public class OverallController {
     @Resource
     OverallService overallService;
 
+    /**
+     * 获取overall数据
+     */
     @GetMapping
     public R<Overall> get() {
         return R.ok(overallService.getOne(null, false));

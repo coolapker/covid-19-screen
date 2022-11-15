@@ -5,7 +5,7 @@
     <select id="getIncr" resultType="mojospy.covid19screen.domain.City">
         select *
         from t_city
-        where city_name not in ('未明确地区', '待确认')
+        where city_name not in ('未明确地区', '待确认', '境外输入人员', '境外输入')
         order by confirmed_incr desc
     </select>
 </mapper>

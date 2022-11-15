@@ -31,8 +31,7 @@ create table t_city
     cured          INT(11) COMMENT '治愈',
     pid            varchar(255) comment '城市表外键',
     update_time    datetime COMMent '更新时间',
-    primary key (cid),
-    foreign key (pid) references t_province (pid)
+    primary key (cid)
 );
 
 # 总体

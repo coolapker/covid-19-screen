@@ -12,7 +12,7 @@ public class Tasker {
     @Resource
     UpdateOverall updateOverall;
 
-    @Scheduled(cron = "0 0 12 * * ?")
+    @Scheduled(cron = "0 0 10 * * ?")
     public void update() {
         UpdateProvinceCity.update();
         updateOverall.update();

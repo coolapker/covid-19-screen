@@ -35,7 +35,7 @@ public class ProvinceController {
     }
 
     /**
-     * 获取累计确诊（排序）数据
+     * 获取省累计确诊
      */
     @GetMapping("/totalDesc")
     public R<List<Province>> getTotal() {
@@ -43,51 +43,19 @@ public class ProvinceController {
     }
 
     /**
-     * 获取现存确诊（排序）数据
+     * 获取省现存确诊
      */
-//    @GetMapping("/confirmed/current")
-//    public R<List<Province>> getCurrent() {
-//        return R.ok(this.provinceService.currentList());
-//    }
+    @GetMapping("/existing")
+    public R<List<Province>> getCurrent() {
+        return R.ok(this.provinceService.currentList());
+    }
 
     /*
-    * 港澳台新增
+    * 获取港澳台新增
     * */
     @GetMapping("/specialRegion")
     public R<List<Province>> getSpecialRegion() {
         return R.ok(this.provinceService.getSpecialRegionList());
     }
-    /**
-     * 新增数据
-     */
-    @PostMapping
-    public ResponseEntity<Boolean> add(Province province) {
-        return ResponseEntity.ok(this.provinceService.save(province));
-    }
-
-     /*
-      编辑数据
-
-      @param  province
-     * @return 编辑结果
-     */
-//    @PutMapping
-//    public ResponseEntity<Province> edit(Province province) {
-//        return ResponseEntity.ok(this.provinceService.update());
-//    }
-
-    /**
-     * 删除数据
-     *
-     * @param id 主键
-     * @return 删除是否成功
-     */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.provinceService.removeById(id));
-    }
-
-
-
 }
 

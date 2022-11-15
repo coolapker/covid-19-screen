@@ -46,6 +46,9 @@ public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> i
         return provinceMapper.getCuredRate();
     }
 
+    /**
+     * 获取累计确诊
+     */
     @Override
     public List<Province> getTotal() {
         LambdaQueryWrapper<Province> wrapper = new LambdaQueryWrapper<>();
@@ -53,6 +56,9 @@ public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> i
         return provinceMapper.selectList(wrapper);
     }
 
+    /**
+     * 获取现存确诊
+     */
     @Override
     public List<Province> currentList() {
         LambdaQueryWrapper<Province> wrapper = new LambdaQueryWrapper<>();

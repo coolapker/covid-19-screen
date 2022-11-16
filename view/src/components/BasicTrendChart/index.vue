@@ -45,7 +45,7 @@ export default {
           itemWidth: 14,
           itemHeight: 5,
           itemGap: 13,
-          data: ['现有确诊新增', '境外输入新增', '无症状感染者'],
+          data: ['现有确诊新增', '境外输入新增',],
           right: '4%',
           textStyle: {
             fontSize: 12,

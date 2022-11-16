@@ -31,7 +31,7 @@ export default {
   },
   // 省 日增
   getDailyList() {
-    let url = `/api/province/list`
+    let url = `/api/daily/list`
     return request.get(url)
   }
 }

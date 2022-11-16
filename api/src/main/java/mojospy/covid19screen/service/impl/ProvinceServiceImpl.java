@@ -65,4 +65,12 @@ public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> i
         wrapper.orderByDesc(Province::getCurrentConfirmedCount);
         return provinceMapper.selectList(wrapper);
     }
+
+    /**
+     * 模糊查询省
+     */
+    @Override
+    public List<Province> search(String provinceName) {
+        return provinceMapper.search(provinceName);
+    }
 }

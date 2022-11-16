@@ -6,7 +6,13 @@
         select *
         from t_city
         where city_name not in ('未明确地区', '待确认', '境外输入人员', '境外输入')
-        order by confirmed_incr desc
+        order by confirmed_incr desc, existing
+    </select>
+    <select id="search" resultType="mojospy.covid19screen.domain.City">
+        select *
+        from t_city
+        where city_name like concat('%', #{cityName}, '%')
+        order by confirmed_incr desc, existing
     </select>
 </mapper>
 

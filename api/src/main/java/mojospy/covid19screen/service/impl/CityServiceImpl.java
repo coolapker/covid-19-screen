@@ -30,6 +30,14 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City>
 //        wrapper.orderByDesc(City::getExisting)
 //        return cityMapper.selectList(wrapper);
     }
+
+    /**
+     * 模糊查询城市
+     */
+    @Override
+    public List<City> search(String cityName) {
+        return cityMapper.search(cityName);
+    }
 }
 
 

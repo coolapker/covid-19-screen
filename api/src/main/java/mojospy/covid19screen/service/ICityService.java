@@ -16,4 +16,9 @@ public interface ICityService extends IService<City> {
      * 城市现有确诊排序
      */
     List<City> getIncr();
+
+    /**
+     * 模糊查询城市
+     */
+    List<City> search(String cityName);
 }

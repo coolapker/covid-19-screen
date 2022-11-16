@@ -56,6 +56,7 @@ create table t_overall
     no_infect_incr          int(11) comment '无症状感染者新增',
     update_time             datetime comment '更新时间'
 ) comment '国内疫情信息';
+
 # 日增
 create table t_daily
 (
@@ -66,7 +67,7 @@ create table t_daily
     input_incr      int(11) comment '境外输入新增',
     cured_incr      int(11) comment '较昨日治愈新增',
     primary key (date_of)
-) comment '疫情记录'
+) comment '每日疫情记录'
 
 
 

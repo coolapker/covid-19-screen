@@ -47,5 +47,13 @@ public class ProvinceController {
     public R<List<Province>> getSpecialRegion() {
         return R.ok(this.provinceService.getSpecialRegionList());
     }
+
+    /**
+     * 模糊查询省
+     */
+    @GetMapping("/search")
+    public R<List<Province>> search(@RequestParam String provinceName) {
+        return R.ok(this.provinceService.search(provinceName));
+    }
 }
 

@@ -12,5 +12,11 @@
         from t_province
         where province_label not in ('香港', '台湾', '澳门')
     </select>
+    <select id="search" resultType="mojospy.covid19screen.domain.Province">
+        select *
+        from t_province
+        where province_label like concat('%', #{provinceName}, '%')
+        order by confirmed_count desc, current_confirmed_incr
+    </select>
 </mapper>
 

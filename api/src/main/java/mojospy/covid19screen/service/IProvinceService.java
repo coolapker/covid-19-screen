@@ -40,7 +40,8 @@ public interface IProvinceService extends IService<Province> {
      */
     double getCuredRate();
 
-
-
-
+    /**
+     * 模糊查询省
+     */
+    List<Province> search(String provinceName);
 }

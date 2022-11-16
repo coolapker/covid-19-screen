@@ -12,7 +12,7 @@ import java.util.List;
  * @author mojospy
  * @since 2022-09-28 15:28:13
  */
-public interface ProvinceService extends IService<Province> {
+public interface IProvinceService extends IService<Province> {
 
     /**
      * 获取港澳台数据

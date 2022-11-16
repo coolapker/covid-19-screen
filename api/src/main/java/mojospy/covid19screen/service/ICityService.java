@@ -10,7 +10,7 @@ import java.util.List;
 * @description 针对表【t_city】的数据库操作Service
 * @createDate 2022-10-11 15:34:46
 */
-public interface CityService extends IService<City> {
+public interface ICityService extends IService<City> {
 
     /**
      * 城市现有确诊排序

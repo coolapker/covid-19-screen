@@ -2,7 +2,7 @@ package mojospy.covid19screen.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import mojospy.covid19screen.domain.Overall;
-import mojospy.covid19screen.service.OverallService;
+import mojospy.covid19screen.service.IOverallService;
 import mojospy.covid19screen.mapper.OverallMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 */
 @Service
 public class OverallServiceImpl extends ServiceImpl<OverallMapper, Overall>
-    implements OverallService{
+    implements IOverallService {
     @Resource
     OverallMapper overallMapper;
 

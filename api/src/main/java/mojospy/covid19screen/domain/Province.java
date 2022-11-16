@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.NoArgsConstructor;
 import lombok.Data;
 
@@ -23,21 +25,29 @@ public class Province implements Serializable {
      */
     private String provinceLabel;
     /**
-     * 现存确诊
+     * 现有确诊
      */
     private Integer currentConfirmedCount;
+    /**
+     * 现有确诊新增
+     */
+    private Integer currentConfirmedIncr;
     /**
      * 累计确诊
      */
     private Integer confirmedCount;
     /**
-     * 较昨日新增
+     * 累计确诊新增
      */
     private Integer todayConfirmedCount;
     /**
      * 累计死亡
      */
     private Integer deadCount;
+    /**
+     * 累计死亡新增
+     */
+    private Integer deadIncr;
     /**
      * 死亡率
      */
@@ -46,6 +56,10 @@ public class Province implements Serializable {
      * 累计治愈
      */
     private Integer curedCount;
+    /**
+     * 累计治愈新增
+     */
+    private Integer curedIncr;
     /**
      * 治愈率
      */

@@ -2,7 +2,6 @@ package mojospy.covid19screen.mapper;
 
 import mojospy.covid19screen.domain.Overall;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import mojospy.covid19screen.tasker.UpdateOverall;
 
 /**
 * @author Administrator

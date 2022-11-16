@@ -12,6 +12,11 @@ public class Spider {
     private static String url = "https://c.m.163.com/ug/api/wuhan/app/data/list-total";
 
 
+    // 腾讯 日增 接口
+    private static String dailyUrl = "https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=chinaDayAddListNew";
+
+
+
     /**
      * 获取响应体里的data
      *
@@ -46,4 +51,13 @@ public class Spider {
         Map data = getData();
         return (Map) data.get("chinaTotal");
     }
+
+    /**
+     * 获取每日数据
+     */
+    public static List getDaily() {
+        Map data = getData();
+        return (List) data.get("chinaDayList");
+    }
+
 }

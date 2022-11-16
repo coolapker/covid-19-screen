@@ -3,8 +3,7 @@ package mojospy.covid19screen.controller;
 
 import mojospy.covid19screen.domain.Province;
 import mojospy.covid19screen.domain.dto.R;
-import mojospy.covid19screen.service.ProvinceService;
-import org.springframework.http.ResponseEntity;
+import mojospy.covid19screen.service.IProvinceService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,16 +22,7 @@ public class ProvinceController {
      * 服务对象
      */
     @Resource
-    ProvinceService provinceService;
-
-
-    /**
-     * 通过主键查询单条数据
-     */
-    @GetMapping("{id}")
-    public ResponseEntity<Province> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.provinceService.getById(id));
-    }
+    IProvinceService provinceService;
 
     /**
      * 获取省累计确诊

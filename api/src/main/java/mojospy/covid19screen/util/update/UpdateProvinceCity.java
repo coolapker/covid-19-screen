@@ -1,10 +1,10 @@
-package mojospy.covid19screen.tasker;
+package mojospy.covid19screen.util.update;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import mojospy.covid19screen.domain.City;
 import mojospy.covid19screen.domain.Province;
-import mojospy.covid19screen.service.CityService;
-import mojospy.covid19screen.service.ProvinceService;
+import mojospy.covid19screen.service.ICityService;
+import mojospy.covid19screen.service.IProvinceService;
 import mojospy.covid19screen.util.Spider;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +17,9 @@ import java.util.Map;
 @Component
 public class UpdateProvinceCity {
     @Resource
-    ProvinceService provinceService;
+    IProvinceService provinceService;
     @Resource
-    CityService cityService;
+    ICityService cityService;
 
     @PostConstruct
     public void add() {
@@ -56,6 +56,11 @@ public class UpdateProvinceCity {
             Map<String, Object> ptotal = (Map) province.get("total");
             Map<String, Integer> ptoday = (Map) province.get("today");
             Integer todayConfirmCount = ptoday.get("confirm");
+            Integer storeConfirm = ptoday.get("storeConfirm");
+            Integer deadIncr = ptoday.get("dead");
+            Integer healIncr = ptoday.get("heal");
+
+
             String pid = (String) province.get("id");
             Integer pconfirm = (Integer) ptotal.get("confirm");
             Integer pheal = (Integer) ptotal.get("heal");
@@ -65,6 +70,9 @@ public class UpdateProvinceCity {
             String curedRate = String.format("%.2f", ((double) pheal / pconfirm) * 100);
 
             Province province1 = new Province();
+            province1.setCuredIncr(healIncr);
+            province1.setDeadIncr(deadIncr);
+            province1.setCurrentConfirmedIncr(storeConfirm);
             province1.setTodayConfirmedCount(todayConfirmCount);
             province1.setDeadCount(pdead);
             province1.setCuredCount(pheal);

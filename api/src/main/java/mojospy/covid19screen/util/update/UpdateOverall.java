@@ -1,9 +1,8 @@
-package mojospy.covid19screen.tasker;
+package mojospy.covid19screen.util.update;
 
 import mojospy.covid19screen.domain.Overall;
-import mojospy.covid19screen.domain.Province;
-import mojospy.covid19screen.service.OverallService;
-import mojospy.covid19screen.service.ProvinceService;
+import mojospy.covid19screen.service.IOverallService;
+import mojospy.covid19screen.service.IProvinceService;
 import mojospy.covid19screen.util.Spider;
 import org.springframework.stereotype.Component;
 
@@ -11,15 +10,14 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 
 @Component
 public class UpdateOverall {
     @Resource
-    OverallService overallService;
+    IOverallService overallService;
     @Resource
-    ProvinceService provinceService;
+    IProvinceService provinceService;
 
     @PostConstruct
     public void update() {
@@ -47,23 +45,57 @@ public class UpdateOverall {
         Integer currentConfirmedIncr = today.get("storeConfirm");
         Integer noInfectIncr = extData.get("incrNoSymptom");
 
+//        // 去除港澳台
+//        List<Province> specialRegionList = provinceService.getSpecialRegionList();
+//        // 累计确诊
+//        int confirmedCountSpe = 0;
+//        // 累计新增
+//        int confirmedIncrSpe = 0;
+//        // 现存确诊
+//        int currentConfirmedCountSpe = 0;
+//        // 现存新增
+//        int currentConfirmedIncrSpe = 0;
+//        // 累计治愈
+//        int curedCountSpe = 0;
+//        // 治愈新增
+//        int curedIncrSpe = 0;
+//        // 累计死亡
+//        int deadCountSpe = 0;
+//        // 死亡新增
+//        int deadIncrSpe = 0;
+//        // 无症状感染总数
+//        int noinfectCountSpe = 0;
+//        // 无症状感染新增
+//        int noInfectIncrSpe = 0;
+//
+//        for (Province region : specialRegionList) {
+//            confirmedCountSpe += region.getConfirmedCount();
+//            currentConfirmedCountSpe += region.getCurrentConfirmedCount();
+//            curedCountSpe += region.getCuredCount();
+//            deadCountSpe += region.getDeadCount();
+//            confirmedIncrSpe += region.getTodayConfirmedCount();
+//            currentConfirmedIncrSpe += region.getCurrentConfirmedIncr();
+//            deadIncrSpe += region.getDeadIncr();
+//            curedIncrSpe += region.getCuredIncr();
+//        }
+
         Overall overall = new Overall();
-        overall.setConfirmedCount(confirmedCount);
-        overall.setCuredCount(curedCount);
-        overall.setDeadCount(deadCount);
+        overall.setConfirmedCount(confirmedCount );
+        overall.setCuredCount(curedCount );
+        overall.setDeadCount(deadCount );
         overall.setCuredRate(curedRate);
         overall.setDeadRate(deadRate);
         overall.setImportedCount(importedCount);
-        overall.setCurrentConfirmedCount(currentConfirmedCount);
-        overall.setNoInfectCount(noinfectCount);
+        overall.setCurrentConfirmedCount(currentConfirmedCount );
+        overall.setCurrentConfirmedIncr(currentConfirmedIncr );
+        overall.setNoInfectCount(noinfectCount );
         overall.setUpdateTime(updateTime);
 
-        overall.setConfirmedIncr(confirmedIncr);
-        overall.setCuredIncr(curedIncr);
-        overall.setDeadIncr(deadIncr);
+        overall.setConfirmedIncr(confirmedIncr );
+        overall.setCuredIncr(curedIncr );
+        overall.setDeadIncr(deadIncr );
         overall.setImportedIncr(importedIncr);
-        overall.setCurrentConfirmedIncr(currentConfirmedIncr);
-        overall.setNoInfectIncr(noInfectIncr);
+        overall.setNoInfectIncr(noInfectIncr );
 
         overallService.insertOrUpdate(overall);
     }

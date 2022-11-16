@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import mojospy.covid19screen.domain.Province;
 import mojospy.covid19screen.mapper.ProvinceMapper;
-import mojospy.covid19screen.service.ProvinceService;
+import mojospy.covid19screen.service.IProvinceService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2022-09-28 15:28:13
  */
 @Service
-public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> implements ProvinceService {
+public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> implements IProvinceService {
     @Resource
     ProvinceMapper provinceMapper;
 

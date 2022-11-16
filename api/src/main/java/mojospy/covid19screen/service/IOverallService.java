@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 * @createDate 2022-10-09 17:22:40
 */
 @Service
-public interface OverallService extends IService<Overall> {
+public interface IOverallService extends IService<Overall> {
+    /**
+     * 插入或更新
+     */
     Boolean insertOrUpdate(Overall overall);
 
 }

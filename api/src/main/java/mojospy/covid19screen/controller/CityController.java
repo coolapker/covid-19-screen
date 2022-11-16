@@ -2,11 +2,8 @@ package mojospy.covid19screen.controller;
 
 
 import mojospy.covid19screen.domain.City;
-import mojospy.covid19screen.domain.Province;
 import mojospy.covid19screen.domain.dto.R;
-import mojospy.covid19screen.service.CityService;
-import mojospy.covid19screen.service.ProvinceService;
-import org.springframework.http.ResponseEntity;
+import mojospy.covid19screen.service.ICityService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,7 +22,7 @@ public class CityController {
      * 服务对象
      */
     @Resource
-    CityService cityService;
+    ICityService cityService;
 
     /**
      * 获取城市新增

@@ -12,11 +12,6 @@ import {
   Icon, Row, Col,  Table, TableColumn, Button, Dialog, Link
 } from 'element-ui';
 
-// if (process.env.NODE_ENV === 'development') {
-//   const { initMockData } = require('../mock')
-//   initMockData()
-// }
-
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 

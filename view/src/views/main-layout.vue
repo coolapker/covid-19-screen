@@ -1,18 +1,10 @@
 <template>
   <div class="container">
-    <!-- 顶部 -->
-      <div class="top-header">
-        <div class="title">
-                  <h1>{{ title }}</h1>
-          <div class="top-header-tip">
-            <div class="sub-title">实时数据来源：网易新闻</div>
-            <div class="last-update-time">
-              更新时间：{{ basicData.updateTime }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="main-content">
+    <!--    <dv-full-screen-container>-->
+    <dv-border-box-11 :title="title">
+      <!-- 顶部 -->
+      <div class="abc"/>
+      <div class="main-content ">
         <el-row>
           <el-col :span="18">
             <!-- 中间信息开始 -->
@@ -56,18 +48,6 @@
                           style="width: 100%; height: 320px"
                       />
                     </chart-card>
-
-                    <!--                   占比-->
-                    <!--                  <chart-card-->
-                    <!--                    title="占比"-->
-                    <!--                    :customClass="`chart-item-bottom-sep`"-->
-                    <!--                  >-->
-                    <!--                    <basic-proportion-chart-->
-                    <!--                      ref="basicProportionChart"-->
-                    <!--                      :data="basicData"-->
-                    <!--                      style="width: 100%; height: 120px"-->
-                    <!--                    />-->
-                    <!--                  </chart-card>-->
                   </el-col>
                   <el-col :span="17">
                     <!-- 顶部基本统计信息开始 -->
@@ -115,15 +95,17 @@
                     <div class="main-inner-map-wraper">
                       <!-- 地图 -->
                       <div class="map">
-                        <el-button type="info"
-                                   style="background-color: #0f142b"
-                                   @click='changeData("count")'>累计
-                        </el-button>
-                        <el-button type="info"
-                                   style="background-color: #0f142b"
-                                   @click='changeData("existing")'>现存
 
-                        </el-button>
+                        <el-button-group>
+                          <el-button type="info"
+                                     :style="countStyle"
+                                     @click='changeData("count")'>累计
+                          </el-button>
+                          <el-button type="info"
+                                     :style="existingStyle"
+                                     @click='changeData("existing")'>现存
+                          </el-button>
+                        </el-button-group>
                         <data-map
                             ref="dataMap"
                             title=""
@@ -281,7 +263,7 @@
             width="30%"
             :before-close="aboutDialogClose"
         >
-          <about/>
+          <about :updateTime="basicData.updateTime"></about>
         </el-dialog>
         <!-- 关于图标 -->
         <div class="about-wraper">
@@ -292,8 +274,9 @@
           ></i>
         </div>
       </div>
+    </dv-border-box-11>
+    <!--    </dv-full-screen-container>-->
   </div>
-
 </template>
 <script>
 // 引入组件
@@ -402,7 +385,9 @@ export default {
   },
   data() {
     return {
-      title: '全国新冠肺炎疫情数据大屏',
+      countStyle: "background-color: #06061A",
+      existingStyle: "background-color: #26254F",
+      title: '新冠疫情数据大屏',
       provinceTableDialogVisible: false,
       cityTableDialogVisible: false,
       aboutDialogVisible: false,
@@ -486,24 +471,6 @@ export default {
     }
   },
   methods: {
-    // 去除日期中的 T
-    // timeFormat(time) {
-    //   let d = time ? new Date(time) : new Date();
-    //   let year = d.getFullYear();
-    //   let month = d.getMonth() + 1;
-    //   let day = d.getDate();
-    //   let hours = d.getHours();
-    //   let min = d.getMinutes();
-    //   let seconds = d.getSeconds();
-    //
-    //   if (month < 10) month = '0' + month;
-    //   if (day < 10) day = '0' + day;
-    //   if (hours < 0) hours = '0' + hours;
-    //   if (min < 10) min = '0' + min;
-    //   if (seconds < 10) seconds = '0' + seconds;
-    //
-    //   return (year + '-' + month + '-' + day + ' ' + hours + ':' + min);
-    // },
     queryBasicData() {
       let self = this
       covid19Service.getOverall().then((res) => {
@@ -552,11 +519,15 @@ export default {
     // 地图更改数据
     changeData(type) {
       if (type === 'existing') {
+        this.existingStyle = "background-color: #26254F"
+        this.countStyle = "background-color: #06061A"
         covid19Service.getProvinceExisting().then(res => {
           this.setMapData(res.data, 'existing')
         })
       }
       if (type === 'count') {
+        this.countStyle = "background-color: #5D0773"
+        this.existingStyle = "background-color: #06061A"
         covid19Service.getProvinceList().then(res => {
           this.setMapData(res.data, 'count')
         })
@@ -767,10 +738,10 @@ export default {
   position: relative;
 }
 
-h1 {
-  font-size: 35px;
-  font-weight: bold;
-  padding: 20px;
+.abc {
+  /*font-size: 35px;*/
+  /*font-weight: bold;*/
+  padding: 27px;
 }
 
 .flex {

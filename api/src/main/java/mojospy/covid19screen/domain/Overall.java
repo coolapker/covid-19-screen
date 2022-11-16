@@ -1,13 +1,13 @@
 package mojospy.covid19screen.domain;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 
@@ -91,6 +91,7 @@ public class Overall implements Serializable {
     /**
      * 更新时间
      */
+    @JsonFormat(timezone = "Asia/Shanghai", pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;

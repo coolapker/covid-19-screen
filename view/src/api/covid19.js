@@ -14,6 +14,11 @@ export default {
     let url = `/api/province/totalDesc`
     return request.get(url)
   },
+  // 省 模糊查询
+  searchProvince(provinceName) {
+    let url = '/api/province/search?provinceName='+provinceName
+    return request.get(url)
+  },
   // 省 现存
   getProvinceExisting() {
     let url = `/api/province/existing`
@@ -27,6 +32,11 @@ export default {
   // 市 新增
   getCityDataList() {
     let url = '/api/city/incr'
+    return request.get(url)
+  },
+  // 市 模糊查询
+  searchCity(cityName) {
+    let url = '/api/city/search?cityName='+cityName
     return request.get(url)
   },
   // 省 日增

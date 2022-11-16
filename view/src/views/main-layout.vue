@@ -179,6 +179,14 @@
             >（更新时间：{{ basicData.updateTime }}）</span
             >
           </div>
+
+          <div style="margin-top: 15px;">
+            <el-input placeholder="请输入省份名" v-model="provinceName">
+              <el-button slot="append" icon="el-icon-search" @click="searchProvince"></el-button>
+            </el-input>
+          </div>
+
+
           <div class="area-data-table-wrapper">
             <el-table
                 class="area-data-table"
@@ -223,6 +231,13 @@
             >（更新时间：{{ basicData.updateTime }}）</span
             >
           </div>
+
+          <div style="margin-top: 15px;">
+            <el-input placeholder="请输入城市名" v-model="cityName">
+              <el-button slot="append" icon="el-icon-search" @click="searchCity"></el-button>
+            </el-input>
+          </div>
+
           <div class="area-data-table-wrapper">
             <el-table
                 class="area-data-table"
@@ -385,6 +400,8 @@ export default {
   },
   data() {
     return {
+      cityName: '',
+      provinceName: '',
       countStyle: "background-color: #06061A",
       existingStyle: "background-color: #26254F",
       title: '新冠疫情数据大屏',
@@ -436,6 +453,7 @@ export default {
         }
       },
       provinceConfirmedCountBoardConfig: initProvinceConfirmedCountBoardConfig(),
+      // 对话框搜索数据
       provinceDataList: [],
       cityDataList: [],
       trendDataList: [],
@@ -471,6 +489,16 @@ export default {
     }
   },
   methods: {
+    searchCity() {
+      covid19Service.searchCity(this.cityName).then(res=>{
+        this.cityDataList = res.data
+      })
+    },
+    searchProvince() {
+      covid19Service.searchProvince(this.provinceName).then(res=>{
+        this.provinceDataList = res.data
+      })
+    },
     queryBasicData() {
       let self = this
       covid19Service.getOverall().then((res) => {
@@ -676,9 +704,17 @@ export default {
     },
     provinceTableDialogClose() {
       this.provinceTableDialogVisible = false
+      this.provinceName=''
+      covid19Service.getProvinceList().then(res => {
+        this.provinceDataList = res.data
+      })
     },
     cityTableDialogClose() {
       this.cityTableDialogVisible = false
+      this.cityName=''
+      covid19Service.getCityDataList().then(res=>{
+        this.cityDataList=res.data
+      })
     },
     aboutDialogShowHandler() {
       this.aboutDialogVisible = true

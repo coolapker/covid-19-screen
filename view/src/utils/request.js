@@ -19,8 +19,8 @@ const fetch = (method = 'GET', url, param = '') => {
   })
 }
 
-const get = (url) => {
-  return fetch('GET', url)
+const get = (url, cityName) => {
+  return fetch('GET', url, cityName)
 }
 
 const post = (url, data) => {

@@ -9,7 +9,7 @@ import VueRouter from 'vue-router'
 import router from './router/index'
 
 import { 
-  Icon, Row, Col,  Table, TableColumn, Button, Dialog, Link
+  Icon, Row, Col,  Table, TableColumn, Button, Dialog, Link, Input
 } from 'element-ui';
 
 Vue.prototype.$echarts = echarts
@@ -25,6 +25,7 @@ Vue.use(TableColumn)
 Vue.use(Button)
 Vue.use(Dialog)
 Vue.use(Link)
+Vue.use(Input)
 Vue.use(VueRouter)
 
 new Vue({

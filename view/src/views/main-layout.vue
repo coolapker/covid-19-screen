@@ -192,6 +192,7 @@
                 class="area-data-table"
                 :data="provinceDataList"
                 style="width: 100%"
+                ref="provinceTable"
             >
               <el-table-column prop="provinceLabel" align="center" label="省份">
               </el-table-column>
@@ -199,23 +200,26 @@
                   prop="confirmedCount"
                   align="center"
                   label="累计确诊"
+                  sortable
               >
               </el-table-column>
               <el-table-column
                   prop="currentConfirmedCount"
                   align="center"
                   label="现有确诊"
+                  sortable
               >
               </el-table-column>
               <el-table-column
                   prop="todayConfirmedCount"
                   align="center"
                   label="较昨日新增"
+                  sortable
               >
               </el-table-column>
-              <el-table-column prop="curedCount" align="center" label="累计治愈">
+              <el-table-column prop="curedCount" align="center" label="累计治愈" sortable>
               </el-table-column>
-              <el-table-column prop="deadCount" align="center" label="累计死亡">
+              <el-table-column prop="deadCount" align="center" label="累计死亡" sortable>
               </el-table-column>
             </el-table>
           </div>
@@ -243,30 +247,41 @@
                 class="area-data-table"
                 :data="cityDataList"
                 style="width: 100%"
-            >
+                ref="cityTable">
               <el-table-column prop="cityName" align="center" label="城市">
               </el-table-column>
               <el-table-column
                   prop="confirmedIncr"
                   align="center"
                   label="较昨日新增"
+                  sortable
               >
               </el-table-column>
               <el-table-column
                   prop="confirmed"
                   align="center"
                   label="累计确诊"
+                  sortable
               >
               </el-table-column>
               <el-table-column
                   prop="existing"
                   align="center"
                   label="现有确诊"
+                  sortable
               >
               </el-table-column>
-              <el-table-column prop="cured" align="center" label="累计治愈">
+              <el-table-column
+                  prop="cured"
+                  align="center"
+                  label="累计治愈"
+                  sortable>
               </el-table-column>
-              <el-table-column prop="dead" align="center" label="累计死亡">
+              <el-table-column
+                  prop="dead"
+                  align="center"
+                  label="累计死亡"
+                  sortable>
               </el-table-column>
             </el-table>
           </div>
@@ -490,12 +505,12 @@ export default {
   },
   methods: {
     searchCity() {
-      covid19Service.searchCity(this.cityName).then(res=>{
+      covid19Service.searchCity(this.cityName).then(res => {
         this.cityDataList = res.data
       })
     },
     searchProvince() {
-      covid19Service.searchProvince(this.provinceName).then(res=>{
+      covid19Service.searchProvince(this.provinceName).then(res => {
         this.provinceDataList = res.data
       })
     },
@@ -704,17 +719,21 @@ export default {
     },
     provinceTableDialogClose() {
       this.provinceTableDialogVisible = false
-      this.provinceName=''
+      this.provinceName = ''
       covid19Service.getProvinceList().then(res => {
         this.provinceDataList = res.data
       })
+      this.$refs.provinceTable.clearSort()
     },
     cityTableDialogClose() {
       this.cityTableDialogVisible = false
-      this.cityName=''
-      covid19Service.getCityDataList().then(res=>{
-        this.cityDataList=res.data
+      // 退出后恢复原样
+      this.cityName = ''
+      covid19Service.getCityDataList().then(res => {
+        this.cityDataList = res.data
       })
+      // 清除排序状态
+      this.$refs.cityTable.clearSort()
     },
     aboutDialogShowHandler() {
       this.aboutDialogVisible = true

@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mojospy.covid19screen.mapper.CityMapper">
+    <sql id="exclude">
+        city_name not in ('未明确地区', '待确认', '境外输入人员', '境外输入', '地区待确定', '地区未确认', '地区待确诊', '地市待确认')
+    </sql>
 
     <select id="getIncr" resultType="mojospy.covid19screen.domain.City">
         select *
         from t_city
-        where city_name not in ('未明确地区', '待确认', '境外输入人员', '境外输入')
+        where
+        <include refid="exclude"/>
         order by confirmed_incr desc, existing
     </select>
     <select id="search" resultType="mojospy.covid19screen.domain.City">
         select *
         from t_city
         where city_name like concat('%', #{cityName}, '%')
+        and
+        <include refid="exclude"/>
         order by confirmed_incr desc, existing
     </select>
 </mapper>

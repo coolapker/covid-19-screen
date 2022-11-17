@@ -1,5 +1,6 @@
 package mojospy.covid19screen.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import mojospy.covid19screen.domain.Daily;
 import mojospy.covid19screen.mapper.DailyMapper;
@@ -29,7 +30,7 @@ public class DailyServiceImpl extends ServiceImpl<DailyMapper, Daily> implements
      */
     @Override
     public Map getDailyList() {
-        List<Daily> list = list(null);
+        List<Daily> list = dailyMapper.list();
         Map<String, List> map = new HashMap<>();
         // 累计确诊
         List confirmedCountList = new ArrayList<>();

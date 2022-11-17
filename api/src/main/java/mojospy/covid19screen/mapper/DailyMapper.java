@@ -3,6 +3,8 @@ package mojospy.covid19screen.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import mojospy.covid19screen.domain.Daily;
 
+import java.util.List;
+
 /**
  * 疫情记录(Daily)表数据库访问层
  *
@@ -11,5 +13,9 @@ import mojospy.covid19screen.domain.Daily;
  */
 public interface DailyMapper extends BaseMapper<Daily> {
 
+    /**
+     * 列表
+     */
+    List<Daily> list();
 }
 

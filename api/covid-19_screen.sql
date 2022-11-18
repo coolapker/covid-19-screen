@@ -62,10 +62,10 @@ create table t_daily
 (
     date_of         date comment '记录日期',
     confirmed_count int(11) comment '累计确诊',
-    cured_count     int(11) comment '累计治愈',
     confirmed_incr  int(11) comment '较昨日新增确诊',
-    input_incr      int(11) comment '境外输入新增',
+    cured_count     int(11) comment '累计治愈',
     cured_incr      int(11) comment '较昨日治愈新增',
+    input_incr      int(11) comment '境外输入新增',
     primary key (date_of)
 ) comment '每日疫情记录'
 

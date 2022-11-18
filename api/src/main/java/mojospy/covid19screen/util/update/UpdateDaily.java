@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -18,14 +17,16 @@ public class UpdateDaily {
     IDailyService dailyService;
 
     @PostConstruct
-    public void update () {
+    public void update() {
         List<Map> dailyList = Spider.getDaily();
         for (Map day : dailyList) {
             String dateStr = (String) day.get("date");
             LocalDate date = LocalDate.parse(dateStr);
 
             Map<String, Integer> total = (Map) day.get("total");
-            Integer confirm =  total.get("confirm");
+            // 累计确诊
+            Integer confirm = total.get("confirm");
+            // 累计治愈
             Integer heal = total.get("heal");
 
             Daily daily = new Daily();
@@ -36,11 +37,14 @@ public class UpdateDaily {
             Map<String, Integer> today = (Map) day.get("today");
             // 现有确诊新增
             Integer confirmIncr = today.get("confirm");
+            // 治愈新增
+            Integer healIncr = today.get("heal");
             // 境外输入新增
             Integer inputIncr = today.get("input");
 
             daily.setConfirmedIncr(confirmIncr);
             daily.setInputIncr(inputIncr);
+            daily.setCuredIncr(healIncr);
 
             dailyService.saveOrUpdate(daily);
         }

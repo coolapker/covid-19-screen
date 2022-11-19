@@ -529,7 +529,7 @@ export default {
       confirmSingleBarChartData: {
         dateList: [],
         curedCountList: [],
-        // currentConfirmedCountList: [],
+        currentConfirmedCountList: [],
         confirmedCountList: [],
       },
       rate: {

@@ -70,7 +70,7 @@ export default {
         },
         yAxis: [
           {
-            // show: false,
+            show: false,
             splitLine: { show: false },
             axisLine: {
               lineStyle: {
@@ -82,7 +82,7 @@ export default {
             },
           },
           {
-            // show: false,
+            show: false,
 
             splitLine: { show: false },
             axisLine: {
@@ -111,27 +111,24 @@ export default {
             },
             data: this.data.curedCountList,
           },
-          // {
-          //   name: '累计确诊',
-          //   type: 'bar',
-          //   barGap: '-100%',
-          //   barWidth: 10,
-          //   itemStyle: {
-          //     normal: {
-          //       barBorderRadius: 5,
-          //       color: new echarts.graphic.LinearGradient(
-          //           0, 0, 0, 1,
-          //           [
-          //             {offset: 0, color: 'rgba(119,60,243,0.7)'},
-          //             {offset: 0.3, color: 'rgba(119,60,243,0.5)'},
-          //             {offset: 1, color: 'rgba(119,60,243,0)'}
-          //           ]
-          //       )
-          //     }
-          //   },
-          //   z: -12,
-          //   data: this.data.confirmedCountList
-          // },
+          {
+            name: "累计确诊",
+            type: "bar",
+            barGap: "-100%",
+            barWidth: 10,
+            itemStyle: {
+              normal: {
+                barBorderRadius: 5,
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: "rgba(119,60,243,0.7)" },
+                  { offset: 0.3, color: "rgba(119,60,243,0.5)" },
+                  { offset: 1, color: "rgba(119,60,243,0)" },
+                ]),
+              },
+            },
+            z: -12,
+            data: this.data.confirmedCountList,
+          },
         ],
       };
       chart.setOption(option);

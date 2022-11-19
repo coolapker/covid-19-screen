@@ -4,7 +4,10 @@ package mojospy.covid19screen.controller;
 import mojospy.covid19screen.domain.Province;
 import mojospy.covid19screen.domain.dto.R;
 import mojospy.covid19screen.service.IProvinceService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -41,19 +44,19 @@ public class ProvinceController {
     }
 
     /*
-    * 获取港澳台新增
-    * */
+     * 获取港澳台新增
+     * */
     @GetMapping("/specialRegion")
     public R<List<Province>> getSpecialRegion() {
         return R.ok(this.provinceService.getSpecialRegionList());
     }
 
     /**
-     * 模糊查询省
+     * 模糊查询多个省 (逗号间隔)
      */
     @GetMapping("/search")
-    public R<List<Province>> search(@RequestParam String provinceName) {
-        return R.ok(this.provinceService.search(provinceName));
+    public R<List<Province>> search(@RequestParam String provinceNames) {
+        return R.ok(this.provinceService.search(provinceNames));
     }
 }
 

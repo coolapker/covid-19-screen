@@ -37,11 +37,11 @@ public class CityController {
 
 
     /**
-     * 模糊查询城市
+     * 模糊查询多个城市（逗号分割）
      */
     @GetMapping("/search")
-    public R<List<City>> getBySearch(@RequestParam String cityName) {
-        return R.ok(cityService.search(cityName));
+    public R<List<City>> getBySearch(@RequestParam String cityNames) {
+        return R.ok(cityService.search(cityNames));
     }
 }
 

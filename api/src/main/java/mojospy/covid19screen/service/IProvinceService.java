@@ -43,5 +43,5 @@ public interface IProvinceService extends IService<Province> {
     /**
      * 模糊查询省
      */
-    List<Province> search(String provinceName);
+    List<Province> search(String provinceNames);
 }

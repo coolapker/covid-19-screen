@@ -9,6 +9,7 @@ import mojospy.covid19screen.service.IProvinceService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,7 +71,13 @@ public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> i
      * 模糊查询省
      */
     @Override
-    public List<Province> search(String provinceName) {
-        return provinceMapper.search(provinceName);
+    public List<Province> search(String provinceNames) {
+        String[] provinces = provinceNames.split("[,，]");
+        List<Province> provinceList = new ArrayList<>();
+        for (String province : provinces) {
+            List<Province> list = provinceMapper.search(province);
+            provinceList.addAll(list);
+        }
+        return provinceList;
     }
 }

@@ -7,16 +7,15 @@ import mojospy.covid19screen.service.ICityService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
-* @author Administrator
-* @description 针对表【t_city】的数据库操作Service实现
-* @createDate 2022-10-11 15:34:46
-*/
+ * @author Administrator
+ */
 @Service
 public class CityServiceImpl extends ServiceImpl<CityMapper, City>
-    implements ICityService {
+        implements ICityService {
     @Resource
     CityMapper cityMapper;
 
@@ -35,8 +34,14 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City>
      * 模糊查询城市
      */
     @Override
-    public List<City> search(String cityName) {
-        return cityMapper.search(cityName);
+    public List<City> search(String cityNames) {
+        String[] cities = cityNames.split("[,，]");
+        List<City> cityList = new ArrayList<>();
+        for (String city : cities) {
+            List<City> list = cityMapper.search(city);
+            cityList.addAll(list);
+        }
+        return cityList;
     }
 }
 

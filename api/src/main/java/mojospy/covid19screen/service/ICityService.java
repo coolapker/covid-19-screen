@@ -6,10 +6,8 @@ import mojospy.covid19screen.domain.City;
 import java.util.List;
 
 /**
-* @author Administrator
-* @description 针对表【t_city】的数据库操作Service
-* @createDate 2022-10-11 15:34:46
-*/
+ * @author Administrator
+ */
 public interface ICityService extends IService<City> {
 
     /**
@@ -18,7 +16,7 @@ public interface ICityService extends IService<City> {
     List<City> getIncr();
 
     /**
-     * 模糊查询城市
+     * 模糊查询城市 逗号分割
      */
-    List<City> search(String cityName);
+    List<City> search(String cityNames);
 }

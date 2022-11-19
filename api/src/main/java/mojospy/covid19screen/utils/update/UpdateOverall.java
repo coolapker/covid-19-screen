@@ -1,9 +1,9 @@
-package mojospy.covid19screen.util.update;
+package mojospy.covid19screen.utils.update;
 
 import mojospy.covid19screen.domain.Overall;
 import mojospy.covid19screen.service.IOverallService;
 import mojospy.covid19screen.service.IProvinceService;
-import mojospy.covid19screen.util.Spider;
+import mojospy.covid19screen.utils.Spider;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -80,22 +80,22 @@ public class UpdateOverall {
 //        }
 
         Overall overall = new Overall();
-        overall.setConfirmedCount(confirmedCount );
-        overall.setCuredCount(curedCount );
-        overall.setDeadCount(deadCount );
+        overall.setConfirmedCount(confirmedCount);
+        overall.setCuredCount(curedCount);
+        overall.setDeadCount(deadCount);
         overall.setCuredRate(curedRate);
         overall.setDeadRate(deadRate);
         overall.setImportedCount(importedCount);
-        overall.setCurrentConfirmedCount(currentConfirmedCount );
-        overall.setCurrentConfirmedIncr(currentConfirmedIncr );
-        overall.setNoInfectCount(noinfectCount );
+        overall.setCurrentConfirmedCount(currentConfirmedCount);
+        overall.setCurrentConfirmedIncr(currentConfirmedIncr);
+        overall.setNoInfectCount(noinfectCount);
         overall.setUpdateTime(updateTime);
 
-        overall.setConfirmedIncr(confirmedIncr );
-        overall.setCuredIncr(curedIncr );
-        overall.setDeadIncr(deadIncr );
+        overall.setConfirmedIncr(confirmedIncr);
+        overall.setCuredIncr(curedIncr);
+        overall.setDeadIncr(deadIncr);
         overall.setImportedIncr(importedIncr);
-        overall.setNoInfectIncr(noInfectIncr );
+        overall.setNoInfectIncr(noInfectIncr);
 
         overallService.insertOrUpdate(overall);
     }

@@ -1,4 +1,4 @@
-package mojospy.covid19screen.util;
+package mojospy.covid19screen.utils;
 
 import cn.hutool.http.HttpRequest;
 import com.alibaba.fastjson2.JSONObject;
@@ -13,8 +13,8 @@ public class Spider {
 
 
     // 腾讯 日增 接口
-    private static String dailyUrl = "https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules=chinaDayAddListNew";
-
+    private static String dailyUrl = "https://api.inews.qq.com/newsqa/v1/query/inner/publish/modules/list?modules" +
+            "=chinaDayAddListNew";
 
 
     /**

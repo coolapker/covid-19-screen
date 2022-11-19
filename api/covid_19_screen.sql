@@ -1,3 +1,6 @@
+create database if not exists covid_19_screen;
+use covid_19_screen;
+
 drop table if exists `t_city`;
 drop table if exists `t_province`;
 drop table if exists `t_overall`;

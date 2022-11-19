@@ -1,8 +1,8 @@
-package mojospy.covid19screen.util.update;
+package mojospy.covid19screen.utils.update;
 
 import mojospy.covid19screen.domain.Daily;
 import mojospy.covid19screen.service.IDailyService;
-import mojospy.covid19screen.util.Spider;
+import mojospy.covid19screen.utils.Spider;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

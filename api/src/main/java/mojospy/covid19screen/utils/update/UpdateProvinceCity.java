@@ -1,11 +1,11 @@
-package mojospy.covid19screen.util.update;
+package mojospy.covid19screen.utils.update;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import mojospy.covid19screen.domain.City;
 import mojospy.covid19screen.domain.Province;
 import mojospy.covid19screen.service.ICityService;
 import mojospy.covid19screen.service.IProvinceService;
-import mojospy.covid19screen.util.Spider;
+import mojospy.covid19screen.utils.Spider;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

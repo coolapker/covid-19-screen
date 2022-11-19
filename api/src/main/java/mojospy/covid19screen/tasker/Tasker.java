@@ -1,8 +1,8 @@
 package mojospy.covid19screen.tasker;
 
-import mojospy.covid19screen.util.update.UpdateDaily;
-import mojospy.covid19screen.util.update.UpdateOverall;
-import mojospy.covid19screen.util.update.UpdateProvinceCity;
+import mojospy.covid19screen.utils.update.UpdateDaily;
+import mojospy.covid19screen.utils.update.UpdateOverall;
+import mojospy.covid19screen.utils.update.UpdateProvinceCity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

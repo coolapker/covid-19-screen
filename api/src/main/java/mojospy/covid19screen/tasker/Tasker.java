@@ -17,11 +17,11 @@ public class Tasker {
     @Resource
     UpdateDaily updateDaily;
 
-    @Scheduled(cron = "0 0 10 * * ?")
+    //每天上午10:00点、下午14:00以及下午16:00执行任务
+    @Scheduled(cron = "0 0 10,14,16 * * ?")
     public void update() {
         updateProvinceCity.update();
         updateOverall.update();
         updateDaily.update();
-
     }
 }

@@ -14,7 +14,7 @@
 
 ## 前端项目结构
 
-```shell
+```java
 view
   └─src
      ├─api                                # 接口封装目录
@@ -33,16 +33,16 @@ view
      └─views                              # 视图
 ```
 ## 后端项目结构
-```shell
+```java
 api
  └─src
     ├─controller  # 控制层
-    ├─domain      # 领域对象
+    ├─domain      # 持久层
     ├─mapper      # 数据访问层
     ├─service     # 业务层
     ├─tasker      # 定时任务
     ├─utils       # 工具包
-    │  ├─update   # 更新疫情数据包
+    │  ├─update   # 更新数据
     │  └─Spider   # 爬虫
     └─covid_19_screen.sql # sql文件
 ```

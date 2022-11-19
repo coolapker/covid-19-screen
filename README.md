@@ -26,7 +26,6 @@
     ├─components                         # 组件目录
     │  ├─About                           # 关于
     │  ├─BasicDataItemLabel              # 基本数据显示标签
-    │  ├─BasicProportionChart            # 占比图表
     │  ├─BasicTrendChart                 # 趋势图表
     │  ├─ChartCard                       # 图表面板
     │  ├─CuredAndDeadRateChart           # 治愈率和死亡率图表

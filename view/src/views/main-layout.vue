@@ -193,7 +193,10 @@
           </div>
 
           <div style="margin-top: 15px">
-            <el-input v-model="provinceName" placeholder="请输入省份名">
+            <el-input
+              v-model="provinceName"
+              placeholder="查询多省以逗号间隔，例如：山东，陕西"
+            >
               <el-button
                 slot="append"
                 icon="el-icon-search"
@@ -262,7 +265,10 @@
           </div>
 
           <div style="margin-top: 15px">
-            <el-input v-model="cityName" placeholder="请输入城市名">
+            <el-input
+              v-model="cityName"
+              placeholder="查询多市以逗号间隔，例如：聊城，济宁"
+            >
               <el-button
                 slot="append"
                 icon="el-icon-search"

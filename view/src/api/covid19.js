@@ -16,8 +16,8 @@ export default {
     return request.get(url);
   },
   // 省 模糊查询
-  searchProvince(provinceName) {
-    let url = "/api/province/search?provinceName=" + provinceName;
+  searchProvince(provinceNames) {
+    let url = "/api/province/search?provinceNames=" + provinceNames;
     return request.get(url);
   },
   // 省 现存
@@ -36,8 +36,8 @@ export default {
     return request.get(url);
   },
   // 市 模糊查询
-  searchCity(cityName) {
-    let url = "/api/city/search?cityName=" + cityName;
+  searchCity(cityNames) {
+    let url = "/api/city/search?cityNames=" + cityNames;
     return request.get(url);
   },
   // 省 日增

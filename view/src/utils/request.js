@@ -1,39 +1,8 @@
-import axios from "axios";
-import sysConst from "../libs/const";
+import axios from 'axios';
 
-const fetch = (method = "GET", url, param = "") => {
-  // 处理 url
-  url = `${sysConst.baseUrl}${url}`;
-  return new Promise((resolve, reject) => {
-    axios({
-      method: method,
-      url: url,
-      changeOrigin: true,
-      data: JSON.stringify(param),
-    })
-      .then((res) => {
-        resolve(res.data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-};
+const request = axios.create({
+	baseURL: process.env.VUE_APP_BASE_API,
+	timeout: 10000,
+});
 
-const get = (url, cityName) => {
-  return fetch("GET", url, cityName);
-};
-
-const post = (url, data) => {
-  return fetch("POST", url, data);
-};
-
-const put = (url, data) => {
-  return fetch("PUT", url, data);
-};
-
-const remove = (url, data) => {
-  return fetch("DELETE", url, data);
-};
-
-export { get, post, put, remove };
+export default request;

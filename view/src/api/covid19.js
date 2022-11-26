@@ -1,48 +1,69 @@
-import * as request from "@/utils/request";
-import axios from "axios";
+import request from '@/utils/request';
 
 /**
  * 接口封装
  */
 export default {
-  // 总体
-  getOverall() {
-    let url = `/api/overall`;
-    return request.get(url);
-  },
-  // 省 累计确诊
-  getProvinceList() {
-    let url = `/api/province/totalDesc`;
-    return request.get(url);
-  },
-  // 省 模糊查询
-  searchProvince(provinceNames) {
-    let url = "/api/province/search?provinceNames=" + provinceNames;
-    return request.get(url);
-  },
-  // 省 现存
-  getProvinceExisting() {
-    let url = `/api/province/existing`;
-    return request.get(url);
-  },
-  // 港澳台 新增
-  getSpecialRegion() {
-    let url = "/api/province/specialRegion";
-    return request.get(url);
-  },
-  // 市 新增
-  getCityDataList() {
-    let url = "/api/city/incr";
-    return request.get(url);
-  },
-  // 市 模糊查询
-  searchCity(cityNames) {
-    let url = "/api/city/search?cityNames=" + cityNames;
-    return request.get(url);
-  },
-  // 省 日增
-  getDailyList() {
-    let url = `/api/daily/list`;
-    return request.get(url);
-  },
+	// 总体
+	getOverall() {
+		return request({
+			method: 'get',
+			url: '/overall',
+		});
+	},
+	// 省 累计确诊
+	getProvinceList() {
+		return request({
+			method: 'get',
+			url: '/province/totalDesc',
+		});
+	},
+	// 省 模糊查询
+	searchProvince(provinceNames) {
+		return request({
+			method: 'get',
+			url: '/province/search',
+			params: {
+				provinceNames,
+			},
+		});
+	},
+	// 省 现存
+	getProvinceExisting() {
+		return request({
+			method: 'get',
+			url: '/province/existing',
+		});
+	},
+	// 港澳台 新增
+	getSpecialRegion() {
+		return request({
+			method: 'get',
+			url: '/province/specialRegion',
+		});
+	},
+	// 市 新增
+	getCityDataList() {
+		return request({
+			method: 'get',
+			url: '/city/incr',
+		});
+	},
+	// 市 模糊查询
+	searchCity(cityNames) {
+		return request({
+			method: 'get',
+			url: '/city/search',
+			params: {
+				cityNames,
+			},
+		});
+	},
+	// 省 日增
+	getDailyList() {
+		return request({
+			method: 'get',
+			url: '/daily/list',
+		});
+	},
 };

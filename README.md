@@ -1,16 +1,14 @@
 # 新冠疫情数据大屏
 
-
 ## 技术栈
 
- - [SpringBoot](https://spring.io/projects/spring-boot/)
- - [MybatisPlus](https://baomidou.com/)
- - [Vue.js](https://cn.vuejs.org/)
- - [Apache ECharts](https://echarts.apache.org/zh/index.html)
- - [DataV](http://datav.jiaminghi.com/)
- - [axios](https://axios-http.com/)
- - [Element UI](https://element.eleme.io/#/zh-CN)
- 
+- [SpringBoot](https://spring.io/projects/spring-boot/)
+- [MybatisPlus](https://baomidou.com/)
+- [Vue.js](https://cn.vuejs.org/)
+- [Apache ECharts](https://echarts.apache.org/zh/index.html)
+- [DataV](http://datav.jiaminghi.com/)
+- [axios](https://axios-http.com/)
+- [Element UI](https://element.eleme.io/#/zh-CN)
 
 ## 前端项目结构
 
@@ -27,12 +25,13 @@ view
      │  ├─CurrentConfirmedCompareBarChart # 最近一周累计治愈图表
      │  ├─DataMap                         # 数据地图
      │  └─ProvinceRankingBarChart         # 累计排名图表
-     ├─libs                               # 一些常用的配置
      ├─router                             # 路由配置
      ├─utils                              # 工具类
      └─views                              # 视图
 ```
+
 ## 后端项目结构
+
 ```java
 api
  └─src
@@ -46,18 +45,18 @@ api
     │  └─Spider   # 爬虫
     └─covid_19_screen.sql # sql文件
 ```
+
 ## 项目构建
+
 > 执行sql文件后再启动后端项目
 
 ```shell
 # 安装依赖
-npm install
+npm i
 
 # 运行
-npm run dev
+npm run serve
 
 # 打包
 npm run build
 ```
-
-

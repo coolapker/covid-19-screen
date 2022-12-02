@@ -26,7 +26,7 @@
                           >详情
                         </el-link>
                       </div>
-                      <province-ranking-chart
+                      <ranking-chart
                         ref="topConfirmedCountRankChart"
                         :data="top10CityData"
                         style="width: 100%; height: 380px"
@@ -358,7 +358,7 @@ import CurrentConfirmedCompareBarChart from "../components/CurrentConfirmedCompa
 import About from "../components/About";
 
 import covid19Service from "../api/covid19";
-import ProvinceRankingChart from "@/components/RankingChart/ProvinceRankingChart";
+import RankingChart from "@/components/RankingChart/RankingChart";
 
 const formatter = (number) => {
   const numbers = number.toString().split("").reverse();
@@ -443,7 +443,7 @@ const initProvinceConfirmedCountBoardConfig = (resultList = []) => {
 };
 export default {
   components: {
-    ProvinceRankingChart,
+    RankingChart,
     ChartCard,
     DataMap,
     CuredAndDeadRateChart,

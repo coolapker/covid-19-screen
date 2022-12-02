@@ -452,7 +452,6 @@ export default {
     SpecialRegionRankingChart,
     CurrentConfirmedCompareBarChart,
     About,
-    // BasicProportionChart
   },
   data() {
     return {
@@ -522,7 +521,7 @@ export default {
       },
       // 港澳台数据
       specialRegionData: {
-        regionList: [],
+        cityList: [],
         valueList: [],
       },
       // 趋势数据
@@ -547,11 +546,17 @@ export default {
     };
   },
   methods: {
+    async initAfterQuery() {
+      await this.startQueryData();
+      this.initAllChart();
+    },
+    // dialog查询城市
     searchCity() {
       covid19Service.searchCity(this.cityName).then((res) => {
         this.cityDataList = res.data;
       });
     },
+    // dialog查询省
     searchProvince() {
       covid19Service.searchProvince(this.provinceName).then((res) => {
         this.provinceDataList = res.data;
@@ -566,12 +571,8 @@ export default {
     },
     queryProvinceDataList() {
       let self = this;
+      // 港澳台数据
       covid19Service.getSpecialRegion().then((res) => {
-        if (!res.success) {
-          // TODO 错误处理...
-          console.log("错误:" + res.info);
-          return;
-        }
         self.specialRegionData = res.data;
         self.setSpecialRegionRankingData(res.data);
       });
@@ -579,15 +580,9 @@ export default {
       covid19Service.getCityDataList().then((res) => {
         self.top10CityData = res.data;
         self.setTop10CityData(res.data);
-        self.cityDataList = res.data;
       });
 
       covid19Service.getProvinceList().then((res) => {
-        if (!res.success) {
-          // TODO 错误处理...
-          console.log("错误:" + res.info);
-          return;
-        }
         self.provinceDataList = res.data;
         self.setAreaChartData(res.data);
         // 设置累计排名数据
@@ -811,14 +806,15 @@ export default {
     },
   },
   mounted() {
-    this.initAllChart();
-    this.startQueryData();
+    let self = this;
+    self.initAfterQuery();
+    // this.initAllChart();
+    // this.startQueryData();
     // 地图默认显示现存确诊
     covid19Service.getProvinceExisting().then((res) => {
       this.setMapData(res.data, "existing");
     });
 
-    let self = this;
     // 定义定时器，隔 5 秒刷新一次
     this.timer = setInterval(() => {
       self.startQueryData();

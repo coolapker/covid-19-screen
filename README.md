@@ -40,7 +40,7 @@ api
     ├─mapper      # 数据访问层
     ├─service     # 业务层
     ├─tasker      # 定时任务
-    ├─utils       # 工具包
+    ├─util       # 工具包
     │  ├─update   # 更新数据
     │  └─Spider   # 爬虫
     └─covid_19_screen.sql # sql文件
